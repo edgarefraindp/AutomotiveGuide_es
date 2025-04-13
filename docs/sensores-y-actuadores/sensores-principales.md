@@ -1,3 +1,8 @@
+# Sensores Principales
+
+> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
+> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
 # SENSORES PRINCIPALES
 
 Los sensores en vehículos modernos son dispositivos que convierten magnitudes físicas (temperatura, presión, posición, etc.) en señales eléctricas que pueden ser interpretadas por las unidades de control. Su precisión y fiabilidad son fundamentales para el correcto funcionamiento de todos los sistemas del vehículo.

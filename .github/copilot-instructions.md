@@ -114,3 +114,21 @@ When suggesting images or diagrams:
 - When modifying document structure, update all interconnected references
 - Maintain consistent navigation paths throughout the documentation
 - Provide clear "back to index" links at the end of each document
+
+## Code Style Guidelines
+
+When generating or modifying code for this project, please follow these guidelines:
+
+- **Function naming**: 
+  - Always use UpperCamelCase for custom function names (e.g., `CalculateTemperature`, not `calculateTemperature` or `calculate_temperature`)
+  - Only functions inherited from frameworks/libraries (like Arduino's `setup()` and `loop()`) should remain lowercase
+- **Language**: All code variables, function names, and comments should be in English
+- **Comments**: Comments can be in Spanish when needed to explain functionality to Spanish-speaking users
+- **Vocabulary**: Never use the word "libreria" in Spanish comments as it's incorrect; always use "biblioteca" instead
+- **Variable naming**: Use camelCase for variable names (e.g., `sensorValue`)
+- **Constant naming**: Use UPPERCASE with underscores for constants (e.g., `MAX_TEMPERATURE`)
+- **Code organization**: Group related functionality together and include descriptive comments
+- **Error handling**: Always include basic error handling in code examples
+- **Pin definitions**: For hardware-related code, always use named constants for pin assignments (e.g., `PIN_SENSOR_TEMPERATURE` instead of just numbers)
+
+This coding style aims to maintain readability and consistency across all code examples in the project, making it easier for our target audience to understand and modify the code for their specific needs.

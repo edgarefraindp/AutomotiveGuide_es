@@ -1,3 +1,10 @@
+# Sistemas ADAS
+
+> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
+> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+## Introducción a los Sistemas Avanzados de Asistencia a la Conducción
+
 # SISTEMAS DE ASISTENCIA A LA CONDUCCIÓN (ADAS)
 
 Los sistemas avanzados de asistencia a la conducción (ADAS, Advanced Driver Assistance Systems) representan uno de los avances más significativos en la seguridad y comodidad de los vehículos modernos. Estos sistemas utilizan una combinación de sensores para monitorizar el entorno del vehículo y asistir al conductor.

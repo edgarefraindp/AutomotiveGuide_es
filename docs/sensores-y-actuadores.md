@@ -1,4 +1,7 @@
-# SENSORES Y ACTUADORES EN VEHÍCULOS MODERNOS (2020 EN ADELANTE)
+# Sensores y Actuadores en Vehículos Modernos
+
+> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
+> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
 
 ## ÍNDICE
 

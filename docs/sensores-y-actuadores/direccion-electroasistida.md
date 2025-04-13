@@ -1,3 +1,12 @@
+# Dirección Electroasistida
+
+> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
+> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+## Introducción a la Dirección Electroasistida
+
+## Sistemas de Dirección con Asistencia Eléctrica
+
 # SISTEMAS DE DIRECCIÓN ELECTROASISTIDA
 
 Los sistemas de dirección electroasistida (EPS - Electric Power Steering) han reemplazado casi completamente a los sistemas hidráulicos tradicionales en vehículos modernos, ofreciendo mayor eficiencia energética, adaptabilidad y la posibilidad de integración con sistemas ADAS.

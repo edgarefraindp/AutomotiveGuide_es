@@ -1,3 +1,10 @@
+# Consejos de Diagnóstico
+
+> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
+> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+## Introducción a los Consejos de Diagnóstico
+
 # CONSEJOS PARA DIAGNÓSTICO DE SISTEMAS MODERNOS
 
 El diagnóstico de vehículos modernos requiere un enfoque sistemático y herramientas específicas debido a la complejidad de los sistemas electrónicos interconectados.

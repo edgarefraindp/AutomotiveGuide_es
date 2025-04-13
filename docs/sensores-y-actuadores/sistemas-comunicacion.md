@@ -1,3 +1,10 @@
+# Sistemas de Comunicación
+
+> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
+> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+## Introducción a los Sistemas de Comunicación
+
 # SISTEMAS DE COMUNICACIÓN
 
 Los vehículos modernos incorporan múltiples redes de comunicación que permiten el intercambio de información entre las distintas unidades de control electrónico (ECUs). Estas redes son fundamentales para el funcionamiento integrado de todos los sistemas del vehículo.
