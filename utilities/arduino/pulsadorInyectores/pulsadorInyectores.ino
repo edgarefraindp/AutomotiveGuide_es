@@ -8,7 +8,7 @@
  * to an analog input, simulating the throttle position.
  * 
  * Repository: https://github.com/edgarefraindp/AutomotiveGuide_es
- * For support or to donate: Visit the GitHub repository page
+ * Para soporte o donaciones: Se debe visitar la página del repositorio en GitHub
  * 
  * Proyecto creado para AutomotiveGuide_es
  * 
@@ -32,7 +32,7 @@
 #define MAX_CYCLE_TIME    200   // Maximum time between cycles in ms (minimum RPM)
 
 // FIRING ORDERS FOR 4-CYLINDER ENGINES
-// Each order is an array with the sequence of injectors to activate
+// Each order is an array with the sequence of injectors that the system should activate
 const byte ORDER_1342[] = {0, 2, 3, 1}; // Order 1-3-4-2 (common in many inline 4-cylinder engines)
 const byte ORDER_1243[] = {0, 1, 3, 2}; // Order 1-2-4-3 (some European engines)
 const byte ORDER_1324[] = {0, 2, 1, 3}; // Order 1-3-2-4 (some Japanese engines)
@@ -46,23 +46,23 @@ int cycleTime = 100;            // Initial time between cycles in ms
 boolean orderChanged = false;   // Flag to detect order change
 
 void setup() {
-  // Configure output pins (injectors)
+  // It is necessary to configure output pins (injectors)
   pinMode(PIN_INJECTOR_1, OUTPUT);
   pinMode(PIN_INJECTOR_2, OUTPUT);
   pinMode(PIN_INJECTOR_3, OUTPUT);
   pinMode(PIN_INJECTOR_4, OUTPUT);
   pinMode(PIN_STATUS_LED, OUTPUT);
   
-  // Configure input pins
+  // It is recommended to configure input pins
   pinMode(PIN_ORDER_BUTTON, INPUT_PULLUP);
   
-  // Initialize all injectors to off
+  // It is important to initialize all injectors to off
   digitalWrite(PIN_INJECTOR_1, LOW);
   digitalWrite(PIN_INJECTOR_2, LOW);
   digitalWrite(PIN_INJECTOR_3, LOW);
   digitalWrite(PIN_INJECTOR_4, LOW);
   
-  // Start serial communication for debugging
+  // Serial communication is started for debugging
   Serial.begin(9600);
   Serial.println("Injector Pulse Simulator");
   Serial.println("------------------------");
@@ -70,29 +70,29 @@ void setup() {
 }
 
 void loop() {
-  // Read potentiometer and adjust cycle time and pulse width
+  // The system must read the potentiometer and adjust cycle time and pulse width
   int throttleValue = analogRead(PIN_THROTTLE);
   
-  // Map throttle value to cycle time and pulse
+  // The throttle value must be mapped to cycle time and pulse
   // Note: When throttle increases, cycle time decreases (RPM increases)
   cycleTime = map(throttleValue, 0, 1023, MAX_CYCLE_TIME, MIN_CYCLE_TIME);
   
   // Pulse width increases with throttle (more fuel)
   pulseWidth = map(throttleValue, 0, 1023, MIN_PULSE_TIME, MAX_PULSE_TIME);
   
-  // Check if button was pressed to change order
+  // The system checks if the button was pressed to change order
   if (digitalRead(PIN_ORDER_BUTTON) == LOW && !orderChanged) {
     orderChanged = true;
-    currentOrder = (currentOrder + 1) % 3; // Rotate among the 3 orders
+    currentOrder = (currentOrder + 1) % 3; // The system rotates among the 3 orders
     PrintCurrentOrder();
   }
   
-  // Reset flag when button is released
+  // It is necessary to reset the flag when the button is released
   if (digitalRead(PIN_ORDER_BUTTON) == HIGH) {
     orderChanged = false;
   }
   
-  // Time control for injection sequence
+  // Time control is performed for the injection sequence
   unsigned long currentTime = millis();
   if (currentTime - previousTime >= cycleTime) {
     previousTime = currentTime;
@@ -102,13 +102,13 @@ void loop() {
 
 // Activates the next injector in the sequence according to selected order
 void ActivateNextInjector() {
-  // Turn off all injectors
+  // The system must turn off all injectors first
   digitalWrite(PIN_INJECTOR_1, LOW);
   digitalWrite(PIN_INJECTOR_2, LOW);
   digitalWrite(PIN_INJECTOR_3, LOW);
   digitalWrite(PIN_INJECTOR_4, LOW);
   
-  // Determine which injector to activate based on current order
+  // It is necessary to determine which injector to activate based on current order
   byte injector = 0;
   
   switch(currentOrder) {
@@ -123,16 +123,16 @@ void ActivateNextInjector() {
       break;
   }
   
-  // Activate the corresponding injector
+  // The corresponding injector is activated
   ActivateInjector(injector);
   
-  // Blink status LED for visualization
+  // It is recommended to blink the status LED for visualization
   digitalWrite(PIN_STATUS_LED, HIGH);
   
-  // Advance to the next position in the sequence
+  // The system advances to the next position in the sequence
   currentPosition = (currentPosition + 1) % 4;
   
-  // Show information on serial monitor
+  // Information is shown on the serial monitor
   Serial.print("Injector: ");
   Serial.print(injector + 1); // +1 to show 1-4 instead of 0-3
   Serial.print(" | Cycle: ");
@@ -141,7 +141,7 @@ void ActivateNextInjector() {
   Serial.print(pulseWidth);
   Serial.println("ms");
   
-  // Turn off LED after pulse time
+  // It is necessary to turn off the LED after pulse time
   delay(pulseWidth);
   digitalWrite(PIN_STATUS_LED, LOW);
 }
