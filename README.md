@@ -141,6 +141,7 @@ The repository includes tools and resources for automotive technicians working w
 - [Documentación de ESP32](utilities/esp32/esp32.md): Proyectos basados en microcontroladores ESP32 para diagnóstico automotriz. / [ESP32 Documentation](utilities/esp32/esp32.md): ESP32 microcontroller-based projects for automotive diagnostics.
 - [Pulsador de Inyectores ESP32](utilities/esp32/pulsadorInyectores_ESP32/manual_es.md): Versión mejorada del pulsador de inyectores basada en ESP32. / [ESP32 Injector Pulser](utilities/esp32/pulsadorInyectores_ESP32/manual_es.md): Enhanced version of the injector pulser based on ESP32.
 - [Control de Marcha con Sensor MAP](utilities/esp32/encendidoElectronico1/manual_es.md): Sistema de control de marcha basado en sensor de presión del múltiple de admisión. / [MAP Sensor-Based Idle Control](utilities/esp32/encendidoElectronico1/manual_es.md): Idle control system based on intake manifold pressure sensor.
+- [Banqueo ECU](utilities/esp32/banqueoEcu1/manual_es.md): Sistema para prueba y diagnóstico de ECUs fuera del vehículo. / [ECU Test Bench](utilities/esp32/banqueoEcu1/manual_es.md): System for testing and diagnosing ECUs outside the vehicle.
 
 ## Público Objetivo / Target Audience
 

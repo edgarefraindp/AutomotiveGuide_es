@@ -172,6 +172,26 @@ Este tipo de herramienta puede ser útil para:
 - Monitorizar sistemas particulares durante la conducción
 - Registrar datos para análisis por profesionales especializados
 
+## Proyectos ESP32 para Diagnóstico Automotriz
+
+### Pulsador de Inyectores ESP32
+
+Sistema digital para probar inyectores de combustible mediante la generación de pulsos controlados. Permite verificar el funcionamiento de inyectores fuera del vehículo con parámetros ajustables.
+
+[Ver manual completo](pulsadorInyectores_ESP32/manual_es.md)
+
+### Sistema de Control de Marcha con Sensor MAP
+
+Sistema basado en ESP32 que emula el control de marcha mínima basado en un sensor de presión del múltiple de admisión (MAP).
+
+[Ver manual completo](encendidoElectronico1/manual_es.md)
+
+### Banqueo ECU
+
+Sistema completo para prueba y diagnóstico de ECUs fuera del vehículo. Permite emular las señales de entrada que la ECU espera recibir y monitorear las señales que genera como respuesta, facilitando la identificación de fallas en la unidad de control.
+
+[Ver manual completo](banqueoEcu1/manual_es.md)
+
 ## Diferencias Principales con Arduino
 
 - **Mayor potencia**: ESP32 es significativamente más rápido y potente
