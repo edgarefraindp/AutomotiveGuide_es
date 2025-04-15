@@ -1,87 +1,87 @@
-# ESP32 para Diagnóstico y Mejoras en tu Vehículo
+# ESP32 para Diagnóstico y Mejoras en Vehículos
 
 > **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
 > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
 
-## ¿Qué es ESP32 y por qué te sirve?
+## ¿Qué es ESP32 y por qué es útil en la mecánica automotriz?
 
-ESP32 es una pequeña computadora (microcontrolador) que cuesta menos de $10 y puede ayudarte con tu vehículo de muchas formas. Es como tener un mini-escáner profesional que además puedes personalizar.
+ESP32 es un microcontrolador de bajo costo (menos de $10) que ofrece múltiples funcionalidades para el diagnóstico y mejora de vehículos. Funciona como un mini-escáner profesional personalizable que el técnico puede adaptar a necesidades específicas.
 
-## ¿Qué puedes hacer con ESP32 en tu vehículo?
+## Aplicaciones del ESP32 en el ámbito automotriz
 
 ### Para diagnóstico
-- **Leer y borrar códigos de falla** sin depender de un consecionario.
-- **Ver datos en tiempo real** como temperatura, RPM, presión, etc.
-- **Grabar información** durante la conducción para análisis posterior
-- **Detectar problemas** en sensores y actuadores
+- **Lectura y borrado de códigos de falla** sin depender de equipos de concesionario.
+- **Visualización de datos en tiempo real** como temperatura, RPM, presión, etc.
+- **Registro de información** durante la conducción para análisis posterior.
+- **Detección de problemas** en sensores y actuadores.
 
-### Para añadir funciones
-- **Instalar sensores de estacionamiento** económicos
-- **Crear sistemas de alarma** personalizados
-- **Automatizar luces** interiores o exteriores
-- **Controlar ventanas**, espejos o cualquier componente eléctrico
-- **Crear un sistema de telemetría** para monitoreo remoto
+### Para implementación de funciones adicionales
+- **Instalación de sensores de estacionamiento** económicos.
+- **Creación de sistemas de alarma** personalizados.
+- **Automatización de luces** interiores o exteriores.
+- **Control de ventanas**, espejos o cualquier componente eléctrico.
+- **Desarrollo de sistemas de telemetría** para monitoreo remoto.
 
-### Para emular componentes
-ESP32 puede "hacerse pasar" por casi cualquier componente electrónico del vehículo:
-- **Simular sensores** (oxígeno, temperatura, presión, etc.)
-- **Reemplazar módulos** que estén dañados
-- **Crear interfaces** para componentes no originales
-- **Corregir señales** de componentes con mal funcionamiento
+### Para emulación de componentes
+El ESP32 puede emular casi cualquier componente electrónico del vehículo:
+- **Simulación de sensores** (oxígeno, temperatura, presión, etc.).
+- **Reemplazo de módulos** dañados.
+- **Creación de interfaces** para componentes no originales.
+- **Corrección de señales** de componentes con mal funcionamiento.
 
-## Es más fácil de lo que crees
+## Facilidad de implementación
 
-No necesitas ser ingeniero. Si sabes usar un multímetro y tienes conocimientos básicos de electricidad, puedes empezar con proyectos sencillos e ir aprendiendo.
+No se requiere ser ingeniero para utilizar el ESP32. Con conocimientos básicos de electricidad y el uso de multímetro, el técnico puede comenzar con proyectos sencillos e ir avanzando progresivamente.
 
-## Lo que necesitarás
+## Requisitos de hardware
 
 - Una placa ESP32 (desde $5-10)
 - Cables y conectores básicos
-- Interfaz CAN (si quieres comunicarte con la computadora del vehículo)
-- Conocimientos muy básicos de programación (hay muchos ejemplos listos para usar)
+- Interfaz CAN (para comunicación con la computadora del vehículo)
+- Conocimientos básicos de programación (existen numerosos ejemplos listos para usar)
 
-## Conceptos Básicos que Debes Conocer
+## Conceptos Básicos Necesarios
 
-### ¿Qué son los GPIO?
-- **GPIO = Pines de Entrada/Salida**: Los "conectores" metálicos del ESP32
-- **Entrada**: Permiten al ESP32 detectar señales eléctricas (como medir voltaje)
-- **Salida**: Permiten al ESP32 enviar señales eléctricas (como activar un relé)
-- **Cantidad**: ESP32 tiene muchos más GPIO que Arduino (hasta 36)
-- **Voltaje**: Todos trabajan a 3.3V (¡importante! son más delicados que Arduino)
+### GPIO (Pines de Entrada/Salida)
+- Los "conectores" metálicos del ESP32
+- **Entrada**: Permiten al ESP32 detectar señales eléctricas (medición de voltaje)
+- **Salida**: Permiten al ESP32 enviar señales eléctricas (activación de un relé)
+- **Cantidad**: El ESP32 dispone de más GPIO que Arduino (hasta 36)
+- **Voltaje**: Todos operan a 3.3V (más sensibles que Arduino)
 
-### ¿Qué es PWM?
-- **PWM = Modulación de Ancho de Pulso**: Técnica para simular voltajes variables con pulsos digitales
-- **Explicación simple**: Como encender y apagar una luz muy rápido para controlar su brillo
-- **Canales**: ESP32 tiene 16 canales PWM (muchos más que Arduino)
-- **Aplicación en vehículos**: Simular sensores de posición, oxígeno, o controlar motores paso a paso
+### PWM (Modulación de Ancho de Pulso)
+- Técnica para simular voltajes variables con pulsos digitales
+- **Explicación simple**: Similar a encender y apagar una luz muy rápidamente para controlar su brillo
+- **Canales**: ESP32 ofrece 16 canales PWM (superando a Arduino)
+- **Aplicación en vehículos**: Simulación de sensores de posición, oxígeno, o control de motores paso a paso
 
-### ¿Qué es ADC (Entradas Analógicas)?
-- **ADC = Convertidor Analógico-Digital**: Permite medir voltajes con precisión
-- **En palabras simples**: Puede "entender" muchos niveles de voltaje, no solo encendido/apagado
-- **Resolución**: ESP32 tiene mayor precisión que Arduino (12 bits vs 10 bits)
-- **Aplicación**: Leer con exactitud sensores de temperatura, presión, nivel de combustible
+### ADC (Entradas Analógicas)
+- Permite medir voltajes con precisión
+- **Explicación simplificada**: Capacidad de "interpretar" múltiples niveles de voltaje, no solo encendido/apagado
+- **Resolución**: ESP32 ofrece mayor precisión que Arduino (12 bits vs 10 bits)
+- **Aplicación**: Lectura precisa de sensores de temperatura, presión, nivel de combustible
 
-### ¿Qué es DAC?
-- **DAC = Convertidor Digital-Analógico**: Genera voltajes reales variables (solo ESP32 lo tiene)
-- **Lo especial**: Puede crear señales analógicas verdaderas (Arduino solo usa PWM)
-- **Aplicación vehicular**: Emular sensores analógicos con gran precisión (sensores de oxígeno, MAP)
+### DAC (Convertidor Digital-Analógico)
+- Genera voltajes reales variables (característica exclusiva del ESP32)
+- **Ventaja principal**: Creación de señales analógicas verdaderas (Arduino solo utiliza PWM)
+- **Aplicación vehicular**: Emulación de sensores analógicos con alta precisión (sensores de oxígeno, MAP)
 
-### ¿Qué es WiFi/Bluetooth?
-- **Conexión inalámbrica integrada**: La gran ventaja de ESP32 sobre Arduino
-- **Uso simple**: Enviar datos a tu celular o computadora sin cables
+### WiFi/Bluetooth
+- **Conectividad inalámbrica integrada**: Ventaja significativa frente a Arduino
+- **Funcionalidad**: Transmisión de datos a dispositivos móviles o computadoras sin conexiones físicas
 - **Aplicación automotriz**: 
   - Monitoreo remoto del vehículo
-  - Control de funciones desde tu celular
+  - Control de funciones mediante dispositivos móviles
   - Diagnóstico a distancia
 
-### ¿Qué es Touch?
-- **Sensores táctiles capacitivos**: Detectan el toque sin necesidad de botones físicos
-- **Aplicación**: Crear paneles de control táctiles simples para tu vehículo
-- **Ventaja**: Sin partes móviles que se desgasten
+### Sensores Táctiles
+- Detectan el contacto sin necesidad de botones físicos
+- **Aplicación**: Desarrollo de paneles de control táctiles para el vehículo
+- **Ventaja**: Ausencia de partes móviles susceptibles al desgaste
 
 ## ESP32-S3: Funcionalidades Ampliadas para Aplicaciones Automotrices
 
-El ESP32-S3 es un modelo mejorado dentro de la familia ESP32 que ofrece algunas características adicionales útiles para aplicaciones técnicas en vehículos:
+El ESP32-S3 es un modelo mejorado dentro de la familia ESP32 que ofrece características adicionales útiles para aplicaciones técnicas en vehículos:
 
 ### Integración con Sistemas RS-485 en Entornos Automotrices
 
@@ -174,31 +174,31 @@ Este tipo de herramienta puede ser útil para:
 
 ## Diferencias Principales con Arduino
 
-- **Mayor potencia**: ESP32 es mucho más rápido y potente
-- **WiFi y Bluetooth integrados**: No necesitas módulos adicionales
-- **Más memoria**: Puedes hacer proyectos más complejos
+- **Mayor potencia**: ESP32 es significativamente más rápido y potente
+- **WiFi y Bluetooth integrados**: No requiere módulos adicionales
+- **Mayor memoria**: Permite desarrollar proyectos más complejos
 - **Más pines y funciones**: DAC, sensores táctiles, más canales PWM
-- **Menor consumo en reposo**: Ideal para proyectos con batería
+- **Menor consumo en reposo**: Ideal para proyectos alimentados por batería
 
-## CUIDADOS EXTREMADAMENTE IMPORTANTES ⚠️
+## PRECAUCIONES DE SEGURIDAD ⚠️
 
-### Antes de conectar al vehículo:
-- **DESCONECTA SIEMPRE la batería** antes de hacer cualquier conexión
-- **USA FUSIBLES** en tus circuitos para proteger tanto tu placa como el vehículo
-- **AÍSLA CORRECTAMENTE todas las conexiones** para evitar cortocircuitos
-- **NUNCA conectes directamente a sistema de airbag** o controles críticos de seguridad
-- **REVISA VOLTAJES** antes de conectar (ESP32 trabaja con 3.3V, el vehículo con 12V)
-- **HAZ COPIAS DE SEGURIDAD** de los datos de la ECU antes de modificar parámetros
+### Antes de la conexión al vehículo:
+- **ES IMPRESCINDIBLE DESCONECTAR la batería** antes de realizar cualquier conexión
+- **ES NECESARIO UTILIZAR FUSIBLES** en los circuitos para proteger tanto la placa como el vehículo
+- **SE DEBE AISLAR CORRECTAMENTE todas las conexiones** para prevenir cortocircuitos
+- **NUNCA se debe conectar directamente al sistema de airbag** o controles críticos de seguridad
+- **ES IMPORTANTE VERIFICAR LOS VOLTAJES** antes de conectar (ESP32 opera con 3.3V, el vehículo con 12V)
+- **ES RECOMENDABLE REALIZAR COPIAS DE SEGURIDAD** de los datos de la ECU antes de modificar parámetros
 
 ### Durante el uso:
-- **PRUEBA PRIMERO** en condiciones seguras, no en carretera
-- **TEN UN PLAN B** por si tu sistema falla
-- **DOCUMENTA todo lo que haces** para poder revertir cambios si es necesario
+- **SE DEBEN REALIZAR PRUEBAS** primero en condiciones seguras, no en carretera
+- **ES PRUDENTE DISPONER DE UN PLAN ALTERNATIVO** en caso de fallo del sistema
+- **ES NECESARIO DOCUMENTAR todas las modificaciones** para poder revertir cambios cuando sea necesario
 
-## Recuerda que:
+## Capacidades del sistema:
 
-- Puedes emular o reemplazar cualquier módulo electrónico del vehículo (climatización, confort, entretenimiento)
-- Puedes simular cualquier señal eléctrica que necesites (sensores, interruptores, comunicación)
-- ESP32 puede comunicarse inalámbricamente, permitiendo diagnóstico remoto y control desde smartphone
+- El ESP32 puede emular o reemplazar cualquier módulo electrónico del vehículo (climatización, confort, entretenimiento)
+- Es posible simular cualquier señal eléctrica requerida (sensores, interruptores, comunicación)
+- El ESP32 permite comunicación inalámbrica, facilitando el diagnóstico remoto y control desde dispositivos móviles
 
-Un ESP32 con el software adecuado puede hacer prácticamente cualquier cosa que hacen los equipos profesionales de diagnóstico, y además permite personalizar funciones que ni siquiera el fabricante del vehículo ofrece.
+Un ESP32 con el software adecuado puede realizar prácticamente todas las funciones de los equipos profesionales de diagnóstico, además de permitir personalizar funcionalidades que incluso el fabricante del vehículo no ofrece.
