@@ -15,7 +15,7 @@ El osciloscopio es una herramienta de diagnóstico avanzada que permite visualiz
 - **Forma de onda**: Es la representación gráfica de cómo cambia el voltaje con el tiempo
 - **Trigger (disparo)**: Punto en el cual el osciloscopio comienza a capturar la señal
 - **Tiempo/División**: Controla la escala horizontal (tiempo)
-- **Voltios/División**: Controla la escala vertical (amplitud)
+- **Volts/División**: Controla la escala vertical (amplitud)
 - **Canales**: Permiten medir múltiples señales simultáneamente
 - **Buffer de memoria**: Almacena las formas de onda para análisis posterior
 
@@ -101,7 +101,7 @@ El osciloscopio es una herramienta de diagnóstico avanzada que permite visualiz
 
 ### Sistemas de carga y arranque
 1. **Alternador**
-   - Rizado de CA
+   - Rizado CA
    - Diodos abiertos o en cortocircuito
    - Regulación bajo carga
    - Ruido eléctrico excesivo
@@ -115,7 +115,7 @@ El osciloscopio es una herramienta de diagnóstico avanzada que permite visualiz
 
 ### Configuración básica
 1. **Selección de escalas**
-   - Voltios/división apropiada para la señal
+   - Volts/división apropiada para la señal
    - Tiempo/división según la velocidad de la señal
    - Auto-configuración como punto de partida
 

@@ -91,7 +91,7 @@ Antes de reemplazar un inyector que parece estar fallando, primero intente una l
 ### 1.2 Bobinas de Encendido
 
 #### ¿Qué hace?
-Las bobinas de encendido generan la alta tensión (entre 20,000 y 45,000 voltios) necesaria para producir la chispa en las bujías que inicia la combustión en los motores de gasolina. Esta tensión elevada se genera en el momento preciso determinado por la ECU para optimizar la combustión según las condiciones de operación del motor.
+Las bobinas de encendido generan la alta tensión (entre 20,000 y 45,000 volts) necesaria para producir la chispa en las bujías que inicia la combustión en los motores de gasolina. Esta tensión elevada se genera en el momento preciso determinado por la ECU para optimizar la combustión según las condiciones de operación del motor.
 
 #### Comparación con modelos anteriores
 En vehículos antiguos, una sola bobina central alimentaba todas las bujías mediante un distribuidor mecánico que repartía la alta tensión según el orden de encendido. Los sistemas modernos emplean bobinas individuales (COP - Coil-On-Plug) o bobinas independientes para cada cilindro o par de cilindros, eliminando el distribuidor y sus limitaciones. Esto permite un control mucho más preciso del momento de encendido, mayor energía de chispa, y sistemas avanzados como el encendido multi-chispa o la variación de energía según las condiciones de operación.
@@ -100,7 +100,7 @@ En vehículos antiguos, una sola bobina central alimentaba todas las bujías med
 La bobina de encendido es esencialmente un transformador que amplifica el voltaje mediante inducción electromagnética. El circuito primario (de baja tensión) recibe 12V de la batería. Cuando la ECU activa el transistor de potencia integrado (generalmente un IGBT), la corriente fluye a través del devanado primario creando un campo magnético. Al interrumpir esta corriente, el campo magnético colapsa rápidamente, induciendo un voltaje mucho mayor en el devanado secundario (con muchas más espiras), generando la alta tensión necesaria para producir la chispa.
 
 #### En palabras sencillas
-La bobina de encendido funciona como un "amplificador de voltaje" que convierte los 12V de la batería en miles de voltios necesarios para la chispa. Es similar a como una palanca multiplica la fuerza aplicada: con un pequeño esfuerzo en un extremo, se consigue un gran efecto en el otro. La bobina "almacena" energía eléctrica en forma de campo magnético y luego la libera rápidamente, como cuando estiramos un resorte y lo soltamos de golpe, generando un impulso mucho más potente.
+La bobina de encendido funciona como un "amplificador de voltaje" que convierte los 12V de la batería en miles de volts necesarios para la chispa. Es similar a como una palanca multiplica la fuerza aplicada: con un pequeño esfuerzo en un extremo, se consigue un gran efecto en el otro. La bobina "almacena" energía eléctrica en forma de campo magnético y luego la libera rápidamente, como cuando estiramos un resorte y lo soltamos de golpe, generando un impulso mucho más potente.
 
 #### Especificaciones eléctricas
 - **Circuito primario**:

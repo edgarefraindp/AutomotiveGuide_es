@@ -102,7 +102,7 @@ ESP32 Pin (16,17,18,19) ---- Resistencia 1kΩ ---- Gate del MOSFET
      - Orden 1-3-2-4 (algunos motores japoneses)
 
    - El LED de estado (Pin 2) parpadea para indicar el funcionamiento
-   - La información de operación puede visualizarse en el Monitor Serial a 115200 baudios
+   - La información de operación puede visualizarse en el Monitor Serial a 115200 hertz
 
 ## Órdenes de encendido
 El programa simula tres órdenes de encendido comunes:
@@ -164,7 +164,7 @@ Se debe presionar el botón conectado al Pin 5 para cambiar entre estos órdenes
 ## Para principiantes
 - Si es su primera vez trabajando con ESP32, puede ser útil comenzar solo con LEDs en lugar de inyectores reales
 - La conexión USB proporciona suficiente energía para el ESP32 y los LEDs, pero necesitará una fuente externa para inyectores reales
-- Puede monitorizar el funcionamiento a través del Monitor Serial del IDE de Arduino a 115200 baudios
+- Puede monitorizar el funcionamiento a través del Monitor Serial del IDE de Arduino a 115200 hertz
 
 ## Contacto y soporte
 Para soporte o para realizar donaciones, se puede visitar la página del repositorio de GitHub: https://github.com/edgarefraindp/AutomotiveGuide_es

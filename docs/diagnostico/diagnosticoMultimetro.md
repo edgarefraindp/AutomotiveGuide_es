@@ -95,7 +95,7 @@ El multímetro (también conocido como polímetro o tester) es la herramienta b�
    - Voltaje CC para la mayoría de sistemas del vehículo
    - Voltaje CA para diagnóstico de alternador
    - Resistencia con sistema apagado (SIEMPRE)
-   - Amperios solo con las conexiones adecuadas
+   - Amperes solo con las conexiones adecuadas
 
 2. **Uso del rango adecuado**
    - Iniciar en el rango más alto y reducir

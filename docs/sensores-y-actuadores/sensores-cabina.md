@@ -224,7 +224,7 @@ Los sensores de calidad del aire funcionan como una "nariz electrónica" extrema
 - **Alimentación**: Típicamente 5-12V DC
 - **Consumo**: 10-100 mA en funcionamiento, 1-5 mA en standby
 - **Sensores de VOC**: 
-  - Respuesta en milivoltios proporcional a la concentración de gases
+  - Respuesta en milivolts proporcional a la concentración de gases
   - Tiempo de calentamiento: 30-120 segundos
   - Sensibilidad: 5-1000 ppb (partes por billón)
 - **Sensores de partículas**: 

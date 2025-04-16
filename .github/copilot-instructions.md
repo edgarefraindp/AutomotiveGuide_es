@@ -62,7 +62,7 @@ For each sensor or actuator, include these sections:
 2. **Comparación con modelos anteriores** (Comparison with older models) - How it differs from traditional systems
 3. **Cómo funciona** (How it works) - Simple explanation of operation
 4. **En palabras sencillas** (In simple terms) - Use analogies with everyday objects or processes that mechanics are familiar with
-5. **Especificaciones eléctricas** (Electrical specifications) - Voltage ranges, resistance values, and other electrical parameters in simple words
+5. **Especificaciones eléctricas** (Electrical specifications) - Voltage ranges (in volts), resistance values (in ohms), current measurements (in amperes), and other electrical parameters in simple words
 6. **Cuando falla** (When it fails) - Symptoms and error codes
 7. **Mantenimiento** (Maintenance) - Preventive care information
 8. **Consejo práctico** (Practical tip) - Provide useful advice before manipulating the component, based on real workshop experience
