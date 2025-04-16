@@ -66,7 +66,3 @@
    1. [REDES DE COMUNICACIÓN VEHICULAR](sensores-y-actuadores/sistemas-comunicacion.md#1-redes-de-comunicación-vehicular)
       1. [Módulo de Control de Carrocería (BCM)](sensores-y-actuadores/sistemas-comunicacion.md#11-módulo-de-control-de-carrocería-bcm)
       2. [Gateway de Comunicaciones](sensores-y-actuadores/sistemas-comunicacion.md#12-gateway-de-comunicaciones)
-5. [CONSEJOS PARA DIAGNÓSTICO DE SISTEMAS MODERNOS](sensores-y-actuadores/consejos-diagnostico.md)
-   1. [Equipamiento Básico Necesario](sensores-y-actuadores/consejos-diagnostico.md#1-equipamiento-básico-necesario)
-   2. [Seguridad en Sistemas Modernos](sensores-y-actuadores/consejos-diagnostico.md#2-seguridad-en-sistemas-modernos)
-   3. [Actualizaciones de Software](sensores-y-actuadores/consejos-diagnostico.md#3-actualizaciones-de-software)

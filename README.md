@@ -18,6 +18,7 @@ This repository contains automotive documentation and utilities focused on moder
 - [Introducción / Introduction](#introducción--introduction)
 - [Documentación / Documentation](#documentación--documentation)
   - [Sensores y Actuadores / Sensors and Actuators](docs/sensores-y-actuadores.md)
+  - [Diagnóstico / Diagnostics](docs/diagnostico/README.md)
 - [Utilidades / Utilities](#utilidades--utilities)
   - [Arduino](utilities/arduino/arduino.md)
   - [ESP32](utilities/esp32/esp32.md)
@@ -56,6 +57,7 @@ Toda la documentación es accesible a través del índice principal:
 All documentation is accessible through the main index:
 
 - [Guía de Sensores y Actuadores / Sensors and Actuators Guide](docs/sensores-y-actuadores.md)
+- [Guía de Diagnóstico / Diagnostic Guide](docs/diagnostico/README.md)
 
 #### Contenido Detallado / Detailed Content
 
@@ -99,7 +101,11 @@ The guide covers the following systems and components:
 
 - **Sistemas de Comunicación / Communication Systems**
 
-- **Consejos de Diagnóstico / Diagnostic Tips**
+- **Diagnóstico / Diagnostics**
+  - Consejos para Diagnóstico de Sistemas Modernos
+  - Diagnóstico con Multímetro
+  - Diagnóstico con Osciloscopio
+  - Metodologías y Procedimientos Recomendados
 
 Para cada sensor o actuador, se incluyen secciones sobre:
 - ¿Qué hace?
