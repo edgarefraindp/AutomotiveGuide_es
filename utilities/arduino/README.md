@@ -92,13 +92,23 @@ Arduino permite simular prácticamente cualquier componente electrónico del veh
 
 ## Proyectos Incluidos en esta Guía
 
-### [Pulsador de Inyectores](pulsadorInyectores/manual_es.md)
+### [Pulsador de Inyectores](pulsadorInyectores/README.md)
 Este proyecto permite evaluar inyectores de combustible fuera del vehículo, simulando diferentes órdenes de encendido comunes en motores de 4 cilindros. Con esta herramienta es posible:
 - Verificar el correcto funcionamiento de los inyectores
 - Detectar inyectores obstruidos o con anomalías
 - Comparar el patrón de pulverización entre diferentes unidades
 - Evaluar la respuesta a diferentes frecuencias de pulso
 - Simular tres órdenes de encendido diferentes: 1-3-4-2, 1-2-4-3 y 1-3-2-4
+
+### [Lector CAN Bus](lectorCanBus/README.md)
+Esta herramienta funciona como un lector de emergencia para sistemas CAN bus cuando los escáneres convencionales fallan. Permite:
+- Verificar la actividad en la red CAN del vehículo
+- Diagnosticar problemas en las resistencias terminadoras
+- Monitorizar los mensajes CAN en tiempo real
+- Comprobar la comunicación entre módulos
+- Ayudar a identificar módulos defectuosos que saturan el bus
+- Funcionar con diferentes velocidades de bus (125, 250, 500 kbps, 1 Mbps)
+- Simular una resistencia terminadora para pruebas de diagnóstico
 
 ## Accesibilidad para Usuarios
 

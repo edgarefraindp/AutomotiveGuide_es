@@ -24,6 +24,14 @@
    4. [Interpretación de formas de onda](diagnosticoOsciloscopio.md#interpretación-de-formas-de-onda)
    5. [Patrones de referencia comunes](diagnosticoOsciloscopio.md#patrones-de-referencia-comunes)
    6. [Diagnóstico avanzado con osciloscopio](diagnosticoOsciloscopio.md#diagnóstico-avanzado-con-osciloscopio)
+5. [DIAGNÓSTICO DE PROBLEMAS EN SISTEMA CAN BUS](diagnostico-canbus.md)
+   1. [¿Qué hacer cuando el escáner no comunica?](diagnostico-canbus.md#qué-hacer-cuando-el-escáner-no-comunica)
+   2. [Verificación de resistencias terminadoras](diagnostico-canbus.md#verificación-de-resistencias-terminadoras-del-can-bus)
+   3. [Verificación de señales con osciloscopio](diagnostico-canbus.md#verificación-de-señales-con-osciloscopio)
+   4. [Análisis con herramientas específicas](diagnostico-canbus.md#3-análisis-con-herramientas-específicas)
+   5. [Diagnóstico avanzado](diagnostico-canbus.md#4-diagnóstico-avanzado)
+   6. [Soluciones cuando el problema persiste](diagnostico-canbus.md#cuando-el-problema-persiste)
+   7. [Herramientas de diagnóstico DIY](diagnostico-canbus.md#herramienta-básica-de-lectura-de-can-bus)
 
 Esta sección está dedicada a proporcionar información sobre el diagnóstico de sistemas electrónicos modernos en vehículos, incluyendo herramientas necesarias, procedimientos de seguridad, y metodologías recomendadas para un diagnóstico efectivo.
 
