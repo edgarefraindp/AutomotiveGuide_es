@@ -1,3 +1,16 @@
+/**
+ * @file banqueoEcu1_main.c
+ * @brief ECU test bench logic for ESP32
+ *
+ * This file is part of the AutomotiveGuide_es project.
+ *
+ * > **Repositorio**: https://github.com/edgarefraindp/AutomotiveGuide_es
+ * > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+ *
+ * @author AutomotiveGuide_es
+ * @date April 2025
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>

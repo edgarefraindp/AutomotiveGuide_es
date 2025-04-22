@@ -1,3 +1,8 @@
+> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
+> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+---
+
 # Control de Marcha basado en Sensor MAP para ESP32
 
 ## Descripción

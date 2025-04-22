@@ -1,7 +1,23 @@
-# Arduino para Propósitos Automotrices
-
 > **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
 > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+---
+
+# Utilidades Arduino
+
+Esta carpeta contiene proyectos y herramientas desarrolladas para placas Arduino, enfocadas en el diagnóstico y simulación de sistemas automotrices.
+
+## Proyectos Incluidos
+
+- **banqueoEcu1**: Banco de pruebas básico para ECUs, simulando señales de sensores.
+- **lectorCanBus**: Lector simple de mensajes CAN Bus.
+- **pulsadorInyectores**: Generador de pulsos para probar inyectores de combustible.
+
+## Propósito
+
+Ofrecer herramientas de bajo costo y código abierto que puedan ser utilizadas por técnicos y entusiastas para aprender, diagnosticar y experimentar con la electrónica automotriz.
+
+# Arduino para Propósitos Automotrices
 
 ## ¿Qué es Arduino y por qué es útil en el ámbito automotriz?
 

@@ -1,3 +1,8 @@
+> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
+> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+---
+
 # Manual de Usuario: Pulsador de Inyectores para ESP32
 
 ## Descripción
@@ -166,5 +171,3 @@ Se debe presionar el botón conectado al Pin 5 para cambiar entre estos órdenes
 - La conexión USB proporciona suficiente energía para el ESP32 y los LEDs, pero necesitará una fuente externa para inyectores reales
 - Puede monitorizar el funcionamiento a través del Monitor Serial del IDE de Arduino a 115200 hertz
 
-## Contacto y soporte
-Para soporte o para realizar donaciones, se puede visitar la página del repositorio de GitHub: https://github.com/edgarefraindp/AutomotiveGuide_es

@@ -1,7 +1,9 @@
-# Lector CAN Bus para Diagnóstico de Emergencia
-
 > **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
 > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+---
+
+# Lector CAN Bus para Diagnóstico de Emergencia
 
 ## Introducción
 

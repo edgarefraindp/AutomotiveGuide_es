@@ -1,7 +1,5 @@
 # AutomotiveGuide_es: Guía Automotriz en Español / Automotive Guide in Spanish
 
-> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
-> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
 
 Esta es una guía práctica en español que explica los sistemas de vehículos modernos en términos simples, enfocada especialmente en sensores y actuadores electrónicos.
 

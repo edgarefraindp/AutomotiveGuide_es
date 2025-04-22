@@ -1,7 +1,31 @@
-# Sensores y Actuadores en Vehículos Modernos
-
 > **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
 > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+---
+
+# Documentación - Sensores y Actuadores
+
+Esta sección detalla el funcionamiento, diagnóstico y características de los principales sensores y actuadores encontrados en vehículos modernos (2020 en adelante).
+
+## Contenido Principal
+
+- **Introducción**: Visión general de los sistemas electrónicos.
+- **Sensores Principales**: Descripción general de los sensores clave.
+- **Sensores de Motor**: MAP, MAF, TPS, CKP, CMP, ECT, IAT, O2, Knock.
+- **Sistema de Aceleración Electrónica**: Funcionamiento y diagnóstico del cuerpo de aceleración electrónico.
+- **Sensores de Emisiones**: EGR, EVAP, Sensores de NOx, Filtro de partículas.
+- **Sistemas ADAS**: Sensores de radar, lidar, cámaras.
+- **Sensores de Frenos**: ABS, ESP, Sensores de ángulo de dirección.
+- **Sensores y Actuadores de Cabina**: Climatización, confort, infotainment.
+- **Dirección Electroasistida (EPS)**: Funcionamiento y diagnóstico.
+- **Actuadores Principales**: Inyectores, bobinas, válvulas solenoides, motores paso a paso.
+- **Sistemas de Comunicación**: CAN Bus, LIN Bus, FlexRay.
+
+## Enfoque
+
+La documentación está diseñada para mecánicos tradicionales, explicando los conceptos electrónicos de forma sencilla, comparando con sistemas anteriores y proporcionando guías de diagnóstico prácticas.
+
+# Sensores y Actuadores en Vehículos Modernos
 
 ## ÍNDICE
 

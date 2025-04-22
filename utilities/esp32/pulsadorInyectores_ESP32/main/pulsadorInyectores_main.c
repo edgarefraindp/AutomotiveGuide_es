@@ -1,6 +1,15 @@
-/*
- * PULSADOR DE INYECTORES PARA ESP32 USANDO ESP-IDF
- * 
+/**
+ * @file pulsadorInyectores_main.c
+ * @brief Injector pulser logic for ESP32
+ *
+ * This file is part of the AutomotiveGuide_es project.
+ *
+ * > **Repositorio**: https://github.com/edgarefraindp/AutomotiveGuide_es
+ * > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+ *
+ * @author AutomotiveGuide_es
+ * @date April 2025
+ *
  * Este programa simula señales de pulsos para 4 inyectores de combustible
  * utilizando diferentes órdenes de encendido comunes en motores de 4 cilindros.
  * 
@@ -9,12 +18,6 @@
  * 
  * El programa aprovecha características específicas del ESP32 como el ADC 
  * de mayor resolución y el PWM configurable para un control más preciso.
- * 
- * Repository: https://github.com/edgarefraindp/AutomotiveGuide_es
- * Para soporte o donaciones: Se debe visitar la página del repositorio en GitHub
- * 
- * Proyecto creado para AutomotiveGuide_es
- * 
  */
 
 #include <stdio.h>

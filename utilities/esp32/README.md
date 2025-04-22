@@ -1,7 +1,9 @@
-# ESP32 para Diagnóstico y Mejoras en Vehículos
-
 > **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
 > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+---
+
+# ESP32 para Diagnóstico y Mejoras en Vehículos
 
 ## ¿Qué es ESP32 y por qué es útil en la mecánica automotriz?
 
@@ -197,6 +199,19 @@ Sistema basado en ESP32 que emula el control de marcha mínima basado en un sens
 Sistema completo para prueba y diagnóstico de ECUs fuera del vehículo. Permite emular las señales de entrada que la ECU espera recibir y monitorear las señales que genera como respuesta, facilitando la identificación de fallas en la unidad de control.
 
 [Ver manual completo](banqueoEcu1/README.md)
+
+---
+
+## Proyectos Incluidos
+
+- **banqueoEcu1**: Banco de pruebas para ECUs más avanzado que la versión Arduino, usando ESP-IDF.
+- **encendidoElectronico1**: Simulación de un sistema de encendido electrónico básico basado en sensor MAP.
+- **lectorCanBus**: Lector de mensajes CAN Bus utilizando el controlador CAN incorporado en el ESP32 (requiere transceptor externo).
+- **pulsadorInyectores_ESP32**: Generador de pulsos para inyectores con control más preciso y órdenes de encendido, usando ESP-IDF.
+
+## Propósito
+
+Ofrecer herramientas más potentes y flexibles basadas en ESP32 para el diagnóstico, simulación y aprendizaje de la electrónica automotriz moderna, utilizando el framework ESP-IDF para un control más detallado del hardware.
 
 ## Diferencias Principales con Arduino
 

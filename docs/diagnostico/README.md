@@ -1,7 +1,25 @@
-# Diagnóstico de Sistemas Modernos
-
 > **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
 > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+---
+
+# Documentación - Diagnóstico Automotriz
+
+Esta sección contiene guías y consejos prácticos para el diagnóstico de sistemas electrónicos en vehículos modernos.
+
+## Contenido
+
+- **Introducción al Diagnóstico Electrónico**: Conceptos básicos y herramientas.
+- **Diagnóstico con Multímetro**: Técnicas y mediciones esenciales.
+- **Diagnóstico con Osciloscopio**: Interpretación de señales y formas de onda.
+- **Diagnóstico de Redes CAN Bus**: Principios y solución de problemas.
+- **Consejos Prácticos de Diagnóstico**: Estrategias y trucos del oficio.
+
+## Objetivo
+
+Proporcionar a los técnicos las herramientas y conocimientos necesarios para diagnosticar eficazmente los complejos sistemas electrónicos de los vehículos actuales, utilizando tanto herramientas básicas como avanzadas.
+
+# Diagnóstico de Sistemas Modernos
 
 ## ÍNDICE
 
@@ -29,8 +47,6 @@
    2. [Verificación de resistencias terminadoras](diagnostico-canbus.md#verificación-de-resistencias-terminadoras-del-can-bus)
    3. [Verificación de señales con osciloscopio](diagnostico-canbus.md#verificación-de-señales-con-osciloscopio)
    4. [Análisis con herramientas específicas](diagnostico-canbus.md#3-análisis-con-herramientas-específicas)
-   5. [Diagnóstico avanzado](diagnostico-canbus.md#4-diagnóstico-avanzado)
-   6. [Soluciones cuando el problema persiste](diagnostico-canbus.md#cuando-el-problema-persiste)
    7. [Herramientas de diagnóstico DIY](diagnostico-canbus.md#herramienta-básica-de-lectura-de-can-bus)
 
 Esta sección está dedicada a proporcionar información sobre el diagnóstico de sistemas electrónicos modernos en vehículos, incluyendo herramientas necesarias, procedimientos de seguridad, y metodologías recomendadas para un diagnóstico efectivo.

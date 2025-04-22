@@ -1,3 +1,8 @@
+> **Repositorio**: [https://github.com/edgarefraindp/AutomotiveGuide_es](https://github.com/edgarefraindp/AutomotiveGuide_es)  
+> **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+
+---
+
 # Manual de Usuario: Pulsador de Inyectores
 
 ## Descripción
