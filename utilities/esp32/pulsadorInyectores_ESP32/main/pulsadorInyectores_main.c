@@ -4,20 +4,20 @@
  *
  * This file is part of the AutomotiveGuide_es project.
  *
- * > **Repositorio**: https://github.com/edgarefraindp/AutomotiveGuide_es
- * > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+ * > **Repository**: https://github.com/edgarefraindp/AutomotiveGuide_es
+ * > **For donations and support**: Please visit the GitHub repository page
  *
  * @author AutomotiveGuide_es
  * @date April 2025
  *
- * Este programa simula señales de pulsos para 4 inyectores de combustible
- * utilizando diferentes órdenes de encendido comunes en motores de 4 cilindros.
+ * This program simulates pulse signals for 4 fuel injectors
+ * using different firing orders common in 4-cylinder engines.
  * 
- * La velocidad de pulso es controlada por un potenciómetro conectado
- * a una entrada analógica, simulando la posición del acelerador.
+ * The pulse speed is controlled by a potentiometer connected
+ * to an analog input, simulating the throttle position.
  * 
- * El programa aprovecha características específicas del ESP32 como el ADC 
- * de mayor resolución y el PWM configurable para un control más preciso.
+ * The program leverages specific features of the ESP32 such as higher 
+ * resolution ADC and configurable PWM for more precise control.
  */
 
 #include <stdio.h>
@@ -31,51 +31,51 @@
 #include "esp_adc_cal.h"
 #include "driver/uart.h"
 
-// Etiqueta para los mensajes de log
-static const char *TAG = "PULSADOR_INYECTORES";
+// Tag for log messages
+static const char *TAG = "INJECTOR_PULSER";
 
-// DEFINICIONES DE PINES
-#define PIN_INJECTOR_1    GPIO_NUM_16    // Pin para Inyector #1
-#define PIN_INJECTOR_2    GPIO_NUM_17    // Pin para Inyector #2
-#define PIN_INJECTOR_3    GPIO_NUM_18    // Pin para Inyector #3
-#define PIN_INJECTOR_4    GPIO_NUM_19    // Pin para Inyector #4
-#define PIN_THROTTLE      ADC1_CHANNEL_6 // ADC1 canal 6 (GPIO34)
-#define PIN_ORDER_BUTTON  GPIO_NUM_5     // Botón para cambiar orden de encendido
-#define PIN_STATUS_LED    GPIO_NUM_2     // LED indicador de estado
+// PIN DEFINITIONS
+#define PIN_INJECTOR_1    GPIO_NUM_16    // Pin for Injector #1
+#define PIN_INJECTOR_2    GPIO_NUM_17    // Pin for Injector #2
+#define PIN_INJECTOR_3    GPIO_NUM_18    // Pin for Injector #3
+#define PIN_INJECTOR_4    GPIO_NUM_19    // Pin for Injector #4
+#define PIN_THROTTLE      ADC1_CHANNEL_6 // ADC1 channel 6 (GPIO34)
+#define PIN_ORDER_BUTTON  GPIO_NUM_5     // Button to change firing order
+#define PIN_STATUS_LED    GPIO_NUM_2     // Status indicator LED
 
-// PARÁMETROS DEL SISTEMA
-#define MIN_PULSE_TIME    2     // Tiempo mínimo de pulso en ms (acelerador al mínimo)
-#define MAX_PULSE_TIME    15    // Tiempo máximo de pulso en ms (acelerador al máximo)
-#define MIN_CYCLE_TIME    20    // Tiempo mínimo entre ciclos en ms (RPM máximo)
-#define MAX_CYCLE_TIME    200   // Tiempo máximo entre ciclos en ms (RPM mínimo)
-#define ADC_RESOLUTION    4095  // Resolución del ADC del ESP32 (12 bits = 4095)
+// SYSTEM PARAMETERS
+#define MIN_PULSE_TIME    2     // Minimum pulse time in ms (throttle at minimum)
+#define MAX_PULSE_TIME    15    // Maximum pulse time in ms (throttle at maximum)
+#define MIN_CYCLE_TIME    20    // Minimum time between cycles in ms (maximum RPM)
+#define MAX_CYCLE_TIME    200   // Maximum time between cycles in ms (minimum RPM)
+#define ADC_RESOLUTION    4095  // ESP32 ADC resolution (12 bits = 4095)
 
-// UART para comunicación serial
+// UART for serial communication
 #define UART_PORT         UART_NUM_0
 #define UART_TX_PIN       GPIO_NUM_1
 #define UART_RX_PIN       GPIO_NUM_3
 #define UART_BUF_SIZE     1024
 
-// ÓRDENES DE ENCENDIDO PARA MOTORES DE 4 CILINDROS
-// Cada orden es un array con la secuencia de inyectores que el sistema debe activar
-static const uint8_t ORDER_1342[] = {0, 2, 3, 1}; // Orden 1-3-4-2 (común en muchos motores de 4 cilindros en línea)
-static const uint8_t ORDER_1243[] = {0, 1, 3, 2}; // Orden 1-2-4-3 (algunos motores europeos)
-static const uint8_t ORDER_1324[] = {0, 2, 1, 3}; // Orden 1-3-2-4 (algunos motores japoneses)
+// FIRING ORDERS FOR 4-CYLINDER ENGINES
+// Each order is an array with the sequence of injectors the system should activate
+static const uint8_t ORDER_1342[] = {0, 2, 3, 1}; // Order 1-3-4-2 (common in many inline 4-cylinder engines)
+static const uint8_t ORDER_1243[] = {0, 1, 3, 2}; // Order 1-2-4-3 (some European engines)
+static const uint8_t ORDER_1324[] = {0, 2, 1, 3}; // Order 1-3-2-4 (some Japanese engines)
 
-// Variables globales
+// Global variables
 static uint8_t currentOrder = 0;         // 0=1342, 1=1243, 2=1324
-static uint8_t currentPosition = 0;      // Posición actual en la secuencia (0-3)
-static int pulseWidth = 5;               // Ancho de pulso inicial en ms
-static int cycleTime = 100;              // Tiempo inicial entre ciclos en ms
-static bool orderChanged = false;        // Bandera para detectar cambio de orden
-static uint64_t lastDebounceTime = 0;    // Para debounce del botón
-static uint64_t previousTime = 0;        // Para control de tiempo
-#define DEBOUNCE_DELAY 50               // Tiempo de debounce en ms
+static uint8_t currentPosition = 0;      // Current position in the sequence (0-3)
+static int pulseWidth = 5;               // Initial pulse width in ms
+static int cycleTime = 100;              // Initial time between cycles in ms
+static bool orderChanged = false;        // Flag to detect order change
+static uint64_t lastDebounceTime = 0;    // For button debounce
+static uint64_t previousTime = 0;        // For time control
+#define DEBOUNCE_DELAY 50               // Debounce time in ms
 
-// Calibración del ADC
+// ADC calibration
 static esp_adc_cal_characteristics_t adc_chars;
 
-// Pines de inyectores en un array para fácil acceso
+// Injector pins in an array for easy access
 static const gpio_num_t injectorPins[] = {
     PIN_INJECTOR_1,
     PIN_INJECTOR_2,
@@ -83,7 +83,7 @@ static const gpio_num_t injectorPins[] = {
     PIN_INJECTOR_4
 };
 
-// Prototipos de funciones
+// Function prototypes
 static void ConfigureInjectorPins(void);
 static void ConfigureADC(void);
 static void ConfigureUART(void);
@@ -94,78 +94,78 @@ static int ReadThrottle(void);
 static uint64_t GetMillis(void);
 static void SendUART(const char* data);
 
-// Tarea principal del pulsador de inyectores
+// Main task for injector pulser
 void InjectorPulserTask(void* pvParameters) {
     int throttleValue;
     int reading;
     uint64_t currentTime;
     
-    // El sistema inicia con un mensaje en el UART
-    SendUART("Simulador de Pulsos para Inyectores - Versión ESP-IDF\r\n");
+    // The system starts with a message on the UART
+    SendUART("Injector Pulse Simulator - ESP-IDF Version\r\n");
     SendUART("-------------------------------------------------\r\n");
     PrintCurrentOrder();
     
     while (1) {
-        // Es necesario leer el potenciómetro y ajustar tiempo de ciclo y ancho de pulso
+        // Read the potentiometer and adjust cycle time and pulse width
         throttleValue = ReadThrottle();
         
-        // Se debe mapear el valor del acelerador a tiempo de ciclo y pulso
-        // Nota: Cuando el acelerador aumenta, el tiempo de ciclo disminuye (RPM aumenta)
+        // Map the throttle value to cycle time and pulse width
+        // Note: As throttle increases, cycle time decreases (RPM increases)
         cycleTime = (MAX_CYCLE_TIME - MIN_CYCLE_TIME) * (ADC_RESOLUTION - throttleValue) / ADC_RESOLUTION + MIN_CYCLE_TIME;
         
-        // El ancho de pulso aumenta con el acelerador (más combustible)
+        // Pulse width increases with throttle (more fuel)
         pulseWidth = (MAX_PULSE_TIME - MIN_PULSE_TIME) * throttleValue / ADC_RESOLUTION + MIN_PULSE_TIME;
         
-        // El sistema verifica si se presionó el botón para cambiar el orden con debounce
+        // Check if the button was pressed to change the order with debounce
         reading = gpio_get_level(PIN_ORDER_BUTTON);
         
-        // Si el estado del botón ha cambiado (activo bajo)
+        // If the button state has changed (active low)
         if (reading == 0 && !orderChanged) {
-            // Se aplica debounce para evitar lecturas falsas
+            // Apply debounce to avoid false readings
             if ((GetMillis() - lastDebounceTime) > DEBOUNCE_DELAY) {
                 orderChanged = true;
-                currentOrder = (currentOrder + 1) % 3; // El sistema rota entre las 3 órdenes
+                currentOrder = (currentOrder + 1) % 3; // Rotate between the 3 orders
                 PrintCurrentOrder();
                 lastDebounceTime = GetMillis();
             }
         }
         
-        // Es necesario resetear la bandera cuando se suelta el botón
+        // Reset the flag when the button is released
         if (reading == 1) {
             orderChanged = false;
         }
         
-        // Se realiza el control de tiempo para la secuencia de inyección
+        // Perform time control for the injection sequence
         currentTime = GetMillis();
         if (currentTime - previousTime >= cycleTime) {
             previousTime = currentTime;
             ActivateNextInjector();
         }
         
-        // Pequeña pausa para no saturar el CPU
+        // Small pause to avoid CPU saturation
         vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
 
-// Función principal
+// Main function
 void app_main(void) {
-    // Es necesario configurar los pines GPIO, ADC y UART
+    // Configure GPIO pins, ADC, and UART
     ConfigureInjectorPins();
     ConfigureADC();
     ConfigureUART();
     
-    // Se informa el inicio del sistema
-    ESP_LOGI(TAG, "Iniciando Pulsador de Inyectores");
+    // Log system startup
+    ESP_LOGI(TAG, "Starting Injector Pulser");
     
-    // Se crea la tarea principal
+    // Create the main task
     xTaskCreate(InjectorPulserTask, "injector_pulser_task", 4096, NULL, 5, NULL);
 }
 
-// Configura los pines GPIO
+// Configures GPIO pins
 static void ConfigureInjectorPins(void) {
     gpio_config_t io_conf;
     
-    // Es necesario configurar pines de inyectores como salidas
+    // Configure injector pins as outputs
     io_conf.intr_type = GPIO_INTR_DISABLE;
     io_conf.mode = GPIO_MODE_OUTPUT;
     io_conf.pin_bit_mask = (1ULL << PIN_INJECTOR_1) | (1ULL << PIN_INJECTOR_2) | 
@@ -175,7 +175,7 @@ static void ConfigureInjectorPins(void) {
     io_conf.pull_up_en = 0;
     gpio_config(&io_conf);
     
-    // Es necesario configurar el botón de cambio de orden como entrada con pull-up
+    // Configure the order change button as input with pull-up
     io_conf.intr_type = GPIO_INTR_DISABLE;
     io_conf.mode = GPIO_MODE_INPUT;
     io_conf.pin_bit_mask = (1ULL << PIN_ORDER_BUTTON);
@@ -183,24 +183,24 @@ static void ConfigureInjectorPins(void) {
     io_conf.pull_up_en = 1;
     gpio_config(&io_conf);
     
-    // Es importante inicializar todos los inyectores a apagado
+    // Initialize all injectors to off
     for (int i = 0; i < 4; i++) {
         gpio_set_level(injectorPins[i], 0);
     }
     gpio_set_level(PIN_STATUS_LED, 0);
 }
 
-// Configura el ADC para la lectura del potenciómetro
+// Configures the ADC for potentiometer reading
 static void ConfigureADC(void) {
-    // Es importante configurar el atenuador ADC para el rango de 0-3.3V
+    // Configure ADC attenuator for 0-3.3V range
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(PIN_THROTTLE, ADC_ATTEN_DB_11);
     
-    // Se debe calibrar el ADC para obtener lecturas más precisas
+    // Calibrate the ADC for more accurate readings
     esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
 }
 
-// Configura el UART para la comunicación serial
+// Configures UART for serial communication
 static void ConfigureUART(void) {
     uart_config_t uart_config = {
         .baud_rate = 115200,
@@ -211,43 +211,43 @@ static void ConfigureUART(void) {
         .rx_flow_ctrl_thresh = 122,
     };
     
-    // Es necesario instalar el driver UART
+    // Install the UART driver
     uart_param_config(UART_PORT, &uart_config);
     uart_set_pin(UART_PORT, UART_TX_PIN, UART_RX_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
     uart_driver_install(UART_PORT, UART_BUF_SIZE, UART_BUF_SIZE, 0, NULL, 0);
 }
 
-// Lee el valor del potenciómetro (acelerador)
+// Reads the potentiometer value (throttle)
 static int ReadThrottle(void) {
     uint32_t adc_reading = 0;
     
-    // Es recomendable realizar múltiples lecturas y promediar para estabilidad
+    // Perform multiple readings and average for stability
     for (int i = 0; i < 10; i++) {
         adc_reading += adc1_get_raw(PIN_THROTTLE);
     }
     adc_reading /= 10;
     
-    // Se puede convertir a voltaje si es necesario
+    // Convert to voltage if necessary
     // uint32_t voltage = esp_adc_cal_raw_to_voltage(adc_reading, &adc_chars);
     
     return adc_reading;
 }
 
-// Obtiene el tiempo actual en milisegundos
+// Gets the current time in milliseconds
 static uint64_t GetMillis(void) {
     return esp_timer_get_time() / 1000;
 }
 
-// Envía datos por UART
+// Sends data via UART
 static void SendUART(const char* data) {
     uart_write_bytes(UART_PORT, data, strlen(data));
 }
 
-// Muestra el orden de encendido actual en el monitor serial
+// Displays the current firing order on the serial monitor
 static void PrintCurrentOrder(void) {
     char buffer[50];
     
-    sprintf(buffer, "Orden de encendido: ");
+    sprintf(buffer, "Firing Order: ");
     SendUART(buffer);
     
     switch(currentOrder) {
@@ -263,53 +263,53 @@ static void PrintCurrentOrder(void) {
     }
 }
 
-// Activa un inyector específico
+// Activates a specific injector
 static void ActivateInjector(uint8_t injectorNum) {
     if (injectorNum < 4) {
         gpio_set_level(injectorPins[injectorNum], 1);
     }
 }
 
-// Activa el siguiente inyector en la secuencia según el orden seleccionado
+// Activates the next injector in the sequence based on the selected order
 static void ActivateNextInjector(void) {
     char buffer[100];
     uint8_t injector = 0;
     
-    // El sistema debe apagar todos los inyectores primero
+    // Turn off all injectors first
     for (int i = 0; i < 4; i++) {
         gpio_set_level(injectorPins[i], 0);
     }
     
-    // Se determina qué inyector activar basado en el orden actual
+    // Determine which injector to activate based on the current order
     switch(currentOrder) {
-        case 0: // Orden 1-3-4-2
+        case 0: // Order 1-3-4-2
             injector = ORDER_1342[currentPosition];
             break;
-        case 1: // Orden 1-2-4-3
+        case 1: // Order 1-2-4-3
             injector = ORDER_1243[currentPosition];
             break;
-        case 2: // Orden 1-3-2-4
+        case 2: // Order 1-3-2-4
             injector = ORDER_1324[currentPosition];
             break;
     }
     
-    // Se activa el inyector correspondiente
+    // Activate the corresponding injector
     ActivateInjector(injector);
     
-    // Es necesario parpadear el LED de estado para visualización
+    // Blink the status LED for visualization
     gpio_set_level(PIN_STATUS_LED, 1);
     
-    // El sistema avanza a la siguiente posición en la secuencia
+    // Advance to the next position in the sequence
     currentPosition = (currentPosition + 1) % 4;
     
-    // Se muestra información en el monitor serial
-    sprintf(buffer, "Inyector: %d | Ciclo: %d ms | Pulso: %d ms\r\n", 
-            injector + 1, // +1 para mostrar 1-4 en lugar de 0-3
+    // Display information on the serial monitor
+    sprintf(buffer, "Injector: %d | Cycle: %d ms | Pulse: %d ms\r\n", 
+            injector + 1, // +1 to show 1-4 instead of 0-3
             cycleTime, 
             pulseWidth);
     SendUART(buffer);
     
-    // Es recomendable apagar el LED después del tiempo de pulso
+    // Turn off the LED after the pulse time
     vTaskDelay(pulseWidth / portTICK_PERIOD_MS);
     gpio_set_level(PIN_STATUS_LED, 0);
 }

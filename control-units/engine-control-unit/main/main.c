@@ -4,25 +4,25 @@
  *
  * This file is part of the AutomotiveGuide_es project.
  *
- * > **Repositorio**: https://github.com/edgarefraindp/AutomotiveGuide_es
- * > **Para donaciones y soporte**: Visite la página del repositorio en GitHub
+ * > **Repository**: https://github.com/edgarefraindp/AutomotiveGuide_es
+ * > **For donations and support**: Please visit the GitHub repository page
  *
  * @author AutomotiveGuide_es
  * @date April 2025
  */
 /*
- * engine_control_unit - ECU de encendido para ESP32-S3 y pantalla Waveshare RGB LCD
+ * engine_control_unit - Ignition ECU for ESP32-S3 and Waveshare RGB LCD screen
  *
- * Entradas:
- *  - PIN_BUTTON_IGNITION: Botón de encendido
- *  - PIN_BUTTON_ACCESSORY: Botón de accesorios
- *  - PIN_POT_THROTTLE: Potenciómetro para acelerador
- *  - PIN_RPM_SENSOR: Entrada digital para sensor de posición (RPM)
+ * Inputs:
+ *  - PIN_BUTTON_IGNITION: Ignition button
+ *  - PIN_BUTTON_ACCESSORY: Accessory button
+ *  - PIN_POT_THROTTLE: Potentiometer for throttle
+ *  - PIN_RPM_SENSOR: Digital input for position sensor (RPM)
  *
- * Salidas:
- *  - Pines para simular bobinas de encendido
+ * Outputs:
+ *  - Pins to simulate ignition coils
  *
- * Este código sigue las guías de estilo del proyecto AutomotiveGuide_es.
+ * This code follows the style guidelines of the AutomotiveGuide_es project.
  */
 #include <stdlib.h>
 #include "esp_timer.h"
@@ -34,8 +34,8 @@
 #define PIN_BUTTON_ACCESSORY   GPIO_NUM_3
 #define PIN_POT_THROTTLE       ADC1_CHANNEL_0 // GPIO1
 #define PIN_RPM_SENSOR         GPIO_NUM_4
-#define PIN_MAP_SENSOR         ADC1_CHANNEL_3 // GPIO39 (ejemplo)
-#define PIN_O2_SENSOR          ADC1_CHANNEL_6 // GPIO34 (ejemplo)
+#define PIN_MAP_SENSOR         ADC1_CHANNEL_3 // GPIO39 (example)
+#define PIN_O2_SENSOR          ADC1_CHANNEL_6 // GPIO34 (example)
 #define PIN_OLED_SDA           GPIO_NUM_21
 #define PIN_OLED_SCL           GPIO_NUM_22
 #define PIN_COIL_1             GPIO_NUM_12
@@ -55,7 +55,7 @@ static volatile uint32_t lastRpmPulseTime = 0;
 static bool ignitionOn = false;
 static bool accessoryOn = false;
 
-// Widgets de LVGL para mostrar datos
+// LVGL widgets to display data
 static lv_obj_t* rpmLabel = NULL;
 static lv_obj_t* rpmBar = NULL;
 static lv_obj_t* mapLabel = NULL;
@@ -65,7 +65,7 @@ static lv_obj_t* o2Bar = NULL;
 static lv_obj_t* throttleLabel = NULL;
 static lv_obj_t* throttleBar = NULL;
 
-// Prototipos de funciones
+// Function prototypes
 static void IRAM_ATTR RpmSensorIsrHandler(void* arg);
 static void ButtonTask(void* arg);
 static void ThrottleTask(void* arg);
@@ -74,11 +74,11 @@ static void DisplayTask(void* arg);
 static void InitializeGui(void);
 
 void app_main(void) {
-    // Inicializar pantalla RGB y LVGL (incluye touch si está disponible)
+    // Initialize RGB screen and LVGL (includes touch if available)
     ESP_ERROR_CHECK(waveshare_esp32_s3_rgb_lcd_init());
     ClusterUiInit();
 
-    // Configuración de pines de botones
+    // Button pin configuration
     gpio_config_t io_conf = {
         .pin_bit_mask = (1ULL << PIN_BUTTON_IGNITION) | (1ULL << PIN_BUTTON_ACCESSORY),
         .mode = GPIO_MODE_INPUT,
@@ -88,7 +88,7 @@ void app_main(void) {
     };
     gpio_config(&io_conf);
 
-    // Configuración de pin de sensor de RPM
+    // RPM sensor pin configuration
     gpio_config_t rpm_conf = {
         .pin_bit_mask = (1ULL << PIN_RPM_SENSOR),
         .mode = GPIO_MODE_INPUT,
@@ -100,13 +100,13 @@ void app_main(void) {
     gpio_install_isr_service(0);
     gpio_isr_handler_add(PIN_RPM_SENSOR, RpmSensorIsrHandler, NULL);
 
-    // Configuración ADC para potenciómetro y sensores adicionales
+    // ADC configuration for throttle potentiometer and additional sensors
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(PIN_POT_THROTTLE, ADC_ATTEN_DB_11);
     adc1_config_channel_atten(PIN_MAP_SENSOR, ADC_ATTEN_DB_11);
     adc1_config_channel_atten(PIN_O2_SENSOR, ADC_ATTEN_DB_11);
 
-    // Crear tareas para botones, acelerador, RPM y pantalla
+    // Create tasks for buttons, throttle, RPM, and screen
     xTaskCreate(ButtonTask, "ButtonTask", 2048, NULL, 5, NULL);
     xTaskCreate(ThrottleTask, "ThrottleTask", 2048, NULL, 5, NULL);
     xTaskCreate(RpmTask, "RpmTask", 2048, NULL, 5, NULL);
@@ -115,7 +115,7 @@ void app_main(void) {
     ESP_LOGI("ECU", "Engine Control Unit started");
 }
 
-// ISR para contar pulsos del sensor de RPM
+// ISR to count pulses from the RPM sensor
 tick_type_t lastIsrTick = 0;
 static void IRAM_ATTR RpmSensorIsrHandler(void* arg) {
     tick_type_t now = xTaskGetTickCountFromISR();
@@ -126,7 +126,7 @@ static void IRAM_ATTR RpmSensorIsrHandler(void* arg) {
     }
 }
 
-// Tarea para leer botones de encendido y accesorios
+// Task to read ignition and accessory buttons
 static void ButtonTask(void* arg) {
     bool lastIgnition = false;
     bool lastAccessory = false;
@@ -149,7 +149,7 @@ static void ButtonTask(void* arg) {
     }
 }
 
-// Tarea para leer el potenciómetro del acelerador
+// Task to read the throttle potentiometer
 static void ThrottleTask(void* arg) {
     while (1) {
         int adcValue = adc1_get_raw(PIN_POT_THROTTLE);
@@ -159,7 +159,7 @@ static void ThrottleTask(void* arg) {
     }
 }
 
-// Tarea para calcular y mostrar RPM
+// Task to calculate and display RPM
 static void RpmTask(void* arg) {
     uint32_t lastPulseCount = 0;
     TickType_t lastTime = xTaskGetTickCount();
@@ -170,7 +170,7 @@ static void RpmTask(void* arg) {
         uint32_t deltaTimeMs = (now - lastTime) * portTICK_PERIOD_MS;
         int rpm = 0;
         if (deltaTimeMs > 0) {
-            // Suponiendo 2 pulsos por revolución
+            // Assuming 2 pulses per revolution
             rpm = (deltaPulses * 60000) / (2 * deltaTimeMs);
         }
         ESP_LOGI("ECU", "RPM: %d", rpm);
@@ -180,9 +180,9 @@ static void RpmTask(void* arg) {
     }
 }
 
-// Inicializa la interfaz gráfica con LVGL
+// Initializes the graphical interface with LVGL
 static void InitializeGui(void) {
-    // Crear una pantalla base
+    // Create a base screen
     lv_obj_t* scr = lv_scr_act();
 
     // RPM
@@ -205,7 +205,7 @@ static void InitializeGui(void) {
 
     // O2
     o2Label = lv_label_create(scr);
-    lv_label_set_text(o2Label, "O2: Pobre");
+    lv_label_set_text(o2Label, "O2: Lean");
     lv_obj_align(o2Label, LV_ALIGN_TOP_LEFT, 10, 90);
     o2Bar = lv_bar_create(scr);
     lv_obj_set_size(o2Bar, 300, 20);
@@ -214,7 +214,7 @@ static void InitializeGui(void) {
 
     // Throttle
     throttleLabel = lv_label_create(scr);
-    lv_label_set_text(throttleLabel, "Acelerador: 0%");
+    lv_label_set_text(throttleLabel, "Throttle: 0%");
     lv_obj_align(throttleLabel, LV_ALIGN_TOP_LEFT, 10, 130);
     throttleBar = lv_bar_create(scr);
     lv_obj_set_size(throttleBar, 300, 20);
@@ -222,7 +222,7 @@ static void InitializeGui(void) {
     lv_bar_set_range(throttleBar, 0, 100);
 }
 
-// Tarea para actualizar los widgets de LVGL con los valores actuales
+// Task to update LVGL widgets with current values
 static void DisplayTask(void* arg) {
     ClusterUiData clusterData;
     while (1) {
@@ -236,7 +236,7 @@ static void DisplayTask(void* arg) {
         clusterData.rpm = currentRpm;
         ClusterUiUpdate(&clusterData);
 
-        // Refrescar LVGL
+        // Refresh LVGL
         lv_task_handler();
         vTaskDelay(pdMS_TO_TICKS(100));
     }

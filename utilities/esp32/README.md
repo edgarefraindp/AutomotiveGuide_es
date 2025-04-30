@@ -243,3 +243,7 @@ Ofrecer herramientas más potentes y flexibles basadas en ESP32 para el diagnós
 - El ESP32 permite comunicación inalámbrica, facilitando el diagnóstico remoto y control desde dispositivos móviles
 
 Un ESP32 con el software adecuado puede realizar prácticamente todas las funciones de los equipos profesionales de diagnóstico, además de permitir personalizar funcionalidades que incluso el fabricante del vehículo no ofrece.
+
+---
+
+[Volver al índice principal](../../README.md)

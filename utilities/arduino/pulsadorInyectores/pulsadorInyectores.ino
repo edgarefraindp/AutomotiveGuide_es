@@ -8,9 +8,9 @@
  * to an analog input, simulating the throttle position.
  * 
  * Repository: https://github.com/edgarefraindp/AutomotiveGuide_es
- * Para soporte o donaciones: Se debe visitar la página del repositorio en GitHub
+ * For support or donations: Please visit the GitHub repository page
  * 
- * Proyecto creado para AutomotiveGuide_es
+ * Project created for AutomotiveGuide_es
  * 
  */
 

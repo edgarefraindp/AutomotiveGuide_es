@@ -13,10 +13,6 @@ Esta carpeta contiene proyectos y herramientas desarrolladas para placas Arduino
 - **lectorCanBus**: Lector simple de mensajes CAN Bus.
 - **pulsadorInyectores**: Generador de pulsos para probar inyectores de combustible.
 
-## Propósito
-
-Ofrecer herramientas de bajo costo y código abierto que puedan ser utilizadas por técnicos y entusiastas para aprender, diagnosticar y experimentar con la electrónica automotriz.
-
 # Arduino para Propósitos Automotrices
 
 ## ¿Qué es Arduino y por qué es útil en el ámbito automotriz?
@@ -156,3 +152,7 @@ Arduino puede emular cualquier componente electrónico del vehículo, desde simp
 - Implementar funcionalidades no contempladas por el fabricante original
 
 Con Arduino y conocimientos básicos, el técnico dispone de las herramientas necesarias para diagnosticar, reparar y optimizar prácticamente cualquier sistema electrónico en vehículos modernos.
+
+---
+
+[Volver al índice principal](../../README.md)

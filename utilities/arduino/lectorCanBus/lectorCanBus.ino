@@ -1,23 +1,22 @@
 /*
- * lectorCanBus.ino
+ * lectorCanBus.ino - CAN Bus Reader
  * 
- * Herramienta diagnóstica para verificar actividad en CAN bus cuando los escáneres convencionales fallan
+ * Diagnostic tool to verify activity on CAN bus when conventional scanners fail
  * 
- * Esta herramienta permite:
- * 1. Verificar si hay actividad en la red CAN
- * 2. Mostrar los mensajes CAN recibidos
- * 3. Comprobar las resistencias terminadoras
- * 4. Intentar comunicarse con módulos específicos
+ * This tool allows:
+ * 1. Verify if there is activity on the CAN network
+ * 2. Display received CAN messages
+ * 3. Check termination resistors
+ * 4. Attempt to communicate with specific modules
  * 
- * Conexiones hardware requeridas:
- * - Módulo MCP2515 conectado por SPI al Arduino
- * - Resistencia terminadora opcional de 120 ohms
- * - Pantalla LCD 16x2 con adaptador I2C (opcional)
+ * Required hardware connections:
+ * - MCP2515 module connected via SPI to Arduino
+ * - Optional 120 ohm termination resistor
+ * - 16x2 LCD display with I2C adapter (optional)
  * 
- * Autor: Edgar Efraín Duarte Padrón
- * Fecha: 20/04/2025
+ * Date: 04/20/2025
  * 
- * Parte del proyecto AutomotiveGuide_es
+ * Part of the AutomotiveGuide_es project
  * https://github.com/edgarefraindp/AutomotiveGuide_es
  */
 
@@ -25,84 +24,84 @@
 #include <mcp_can.h>
 #include <LiquidCrystal_I2C.h>
 
-// Definición de pines
-const int PIN_CS_CAN = 10;      // Pin CS (Chip Select) del módulo MCP2515
-const int PIN_INT_CAN = 2;      // Pin INT (Interrupción) del módulo MCP2515
-const int PIN_LED_RX = 7;       // LED que parpadea al recibir mensajes CAN
-const int PIN_LED_ERROR = 8;    // LED que indica error en el bus
-const int PIN_BTN_MODE = 3;     // Botón para cambiar el modo de operación
-const int PIN_SWITCH_TERM = 4;  // Switch para activar/desactivar resistencia terminadora
+// Pin definitions
+const int PIN_CS_CAN = 10;      // CS (Chip Select) pin for MCP2515 module
+const int PIN_INT_CAN = 2;      // INT (Interrupt) pin for MCP2515 module
+const int PIN_LED_RX = 7;       // LED that blinks when receiving CAN messages
+const int PIN_LED_ERROR = 8;    // LED that indicates bus error
+const int PIN_BTN_MODE = 3;     // Button to change operation mode
+const int PIN_SWITCH_TERM = 4;  // Switch to enable/disable termination resistor
 
-// Constantes
-const unsigned long BAUDRATE_SERIAL = 115200;  // Velocidad del puerto serial
-const unsigned long REFRESH_INTERVAL = 500;    // Intervalo de refresco de lecturas en ms
-const byte CAN_SPEED = CAN_500KBPS;           // Velocidad del bus CAN (ajustar según vehículo)
-const byte CRYSTAL_MHZ = MCP_16MHZ;           // Cristal del módulo MCP2515
+// Constants
+const unsigned long BAUDRATE_SERIAL = 115200;  // Serial port speed
+const unsigned long REFRESH_INTERVAL = 500;    // Reading refresh interval in ms
+const byte CAN_SPEED = CAN_500KBPS;           // CAN bus speed (adjust according to vehicle)
+const byte CRYSTAL_MHZ = MCP_16MHZ;           // Crystal frequency of MCP2515 module
 
-// Variables globales
-byte operationMode = 0;             // Modo de operación actual
-unsigned long lastRefreshTime = 0;  // Control de tiempo para actualizaciones
-unsigned int messagesReceived = 0;  // Contador de mensajes recibidos
-bool canInitialized = false;        // Estado de inicialización del módulo CAN
-bool termResistorEnabled = false;   // Estado de la resistencia terminadora
+// Global variables
+byte operationMode = 0;             // Current operation mode
+unsigned long lastRefreshTime = 0;  // Time control for updates
+unsigned int messagesReceived = 0;  // Counter for received messages
+bool canInitialized = false;        // Initialization state of CAN module
+bool termResistorEnabled = false;   // State of termination resistor
 
-// Objetos
-MCP_CAN CAN(PIN_CS_CAN);                      // Objeto para controlar el módulo CAN
-LiquidCrystal_I2C lcd(0x27, 16, 2);          // Objeto para controlar la pantalla LCD
+// Objects
+MCP_CAN CAN(PIN_CS_CAN);                      // Object to control CAN module
+LiquidCrystal_I2C lcd(0x27, 16, 2);          // Object to control LCD display
 
-// Variables para estadísticas de mensajes
-unsigned int msgStats[8] = {0, 0, 0, 0, 0, 0, 0, 0};  // Contadores por ID
-unsigned long lastMessageTime = 0;                    // Tiempo del último mensaje
+// Variables for message statistics
+unsigned int msgStats[8] = {0, 0, 0, 0, 0, 0, 0, 0};  // Counters by ID
+unsigned long lastMessageTime = 0;                    // Time of last message
 
 void setup() {
-  // Inicializar comunicación serial
+  // Initialize serial communication
   Serial.begin(BAUDRATE_SERIAL);
-  Serial.println(F("Lector CAN bus - Herramienta Diagnóstica"));
+  Serial.println(F("CAN Bus Reader - Diagnostic Tool"));
   Serial.println(F("AutomotiveGuide_es"));
   Serial.println(F("--------------------------------------"));
 
-  // Configurar pines
+  // Configure pins
   pinMode(PIN_LED_RX, OUTPUT);
   pinMode(PIN_LED_ERROR, OUTPUT);
   pinMode(PIN_BTN_MODE, INPUT_PULLUP);
   pinMode(PIN_SWITCH_TERM, INPUT_PULLUP);
   pinMode(PIN_INT_CAN, INPUT);
   
-  // Inicializar LCD
+  // Initialize LCD
   lcd.init();
   lcd.backlight();
   lcd.setCursor(0, 0);
-  lcd.print("Lector CAN Bus");
+  lcd.print("CAN Bus Reader");
   lcd.setCursor(0, 1);
-  lcd.print("Inicializando...");
+  lcd.print("Initializing...");
   
-  // Verificar el switch de resistencia terminadora
+  // Check termination resistor switch
   UpdateTerminationResistor();
   
-  // Inicializar el controlador CAN
+  // Initialize CAN controller
   InitializeCANController();
   
-  // Mostrar instrucciones
+  // Display instructions
   PrintInstructions();
 }
 
 void loop() {
-  // Verificar el switch de resistencia terminadora
+  // Check termination resistor switch
   CheckTerminationSwitch();
   
-  // Verificar botón de modo
+  // Check mode button
   CheckModeButton();
   
-  // Procesar mensajes CAN recibidos
+  // Process received CAN messages
   ProcessCANMessages();
   
-  // Actualizar pantalla según intervalo
+  // Update display based on interval
   unsigned long currentTime = millis();
   if (currentTime - lastRefreshTime >= REFRESH_INTERVAL) {
     lastRefreshTime = currentTime;
     UpdateDisplay();
     
-    // Verificar timeout de comunicación (2 segundos sin mensajes = error)
+    // Check communication timeout (2 seconds without messages = error)
     if (messagesReceived > 0 && (currentTime - lastMessageTime) > 2000) {
       SignalError();
     }
@@ -112,16 +111,16 @@ void loop() {
 void InitializeCANController() {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Iniciando CAN...");
+  lcd.print("Starting CAN...");
   
-  // Intentar inicializar el controlador CAN
+  // Attempt to initialize CAN controller
   byte retries = 0;
   canInitialized = false;
   
   while (retries < 3 && !canInitialized) {
     if (CAN.begin(CAN_SPEED, CRYSTAL_MHZ) == CAN_OK) {
       canInitialized = true;
-      Serial.println(F("CAN inicializado correctamente"));
+      Serial.println(F("CAN initialized successfully"));
       
       lcd.setCursor(0, 1);
       lcd.print("OK! 500kbps");
@@ -129,35 +128,35 @@ void InitializeCANController() {
       delay(1000);
     } else {
       retries++;
-      Serial.println(F("Error al inicializar CAN. Reintento..."));
+      Serial.println(F("Error initializing CAN. Retrying..."));
       
       lcd.setCursor(0, 1);
-      lcd.print("Error: Reintento");
+      lcd.print("Error: Retry");
       digitalWrite(PIN_LED_ERROR, HIGH);
       delay(1000);
     }
   }
   
   if (!canInitialized) {
-    Serial.println(F("ERROR: No se pudo inicializar el controlador CAN"));
+    Serial.println(F("ERROR: Failed to initialize CAN controller"));
     lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("ERROR CAN!");
+    lcd.print("CAN ERROR!");
     lcd.setCursor(0, 1);
-    lcd.print("Rev. conexiones");
+    lcd.print("Check connections");
     
-    // Mantener LED de error encendido
+    // Keep error LED on
     digitalWrite(PIN_LED_ERROR, HIGH);
   } else {
-    // Configuración adicional del controlador CAN
+    // Additional CAN controller configuration
     CAN.setMode(MCP_NORMAL);  // Set operation mode to normal
     
-    // Filtros sencillos para evitar saturación
-    // Esto permite todos los mensajes pero se puede modificar para filtrar
+    // Simple filters to avoid saturation
+    // This allows all messages but can be modified to filter
     CAN.init_Mask(0, 0, 0x00000000);
     CAN.init_Mask(1, 0, 0x00000000);
     
-    // Limpiar pantalla para modo operativo
+    // Clear display for operational mode
     lcd.clear();
   }
 }
@@ -169,40 +168,40 @@ void ProcessCANMessages() {
   byte buf[8];
   unsigned long canId;
   
-  // Verificar si hay mensajes disponibles
+  // Check if messages are available
   if (CAN_MSGAVAIL == CAN.checkReceive()) {
-    // Leer el mensaje
+    // Read the message
     if (CAN.readMsgBuf(&canId, &len, buf) == CAN_OK) {
-      // Actualizar estadísticas
+      // Update statistics
       messagesReceived++;
       lastMessageTime = millis();
       
-      // Clasificar por ID para estadísticas (simplificado)
-      byte idCategory = (canId & 0x700) >> 8;  // Usar bits significativos del ID
+      // Classify by ID for statistics (simplified)
+      byte idCategory = (canId & 0x700) >> 8;  // Use significant bits of ID
       if (idCategory < 8) {
         msgStats[idCategory]++;
       }
       
-      // Parpadear LED de recepción
+      // Blink reception LED
       digitalWrite(PIN_LED_RX, HIGH);
       
-      // Mostrar datos según el modo
+      // Display data based on mode
       switch (operationMode) {
-        case 0:  // Modo monitor básico
+        case 0:  // Basic monitor mode
           PrintBasicInfo(canId, len, buf);
           break;
-        case 1:  // Modo monitor detallado
+        case 1:  // Detailed monitor mode
           PrintDetailedInfo(canId, len, buf);
           break;
-        case 2:  // Modo estadísticas
-          // Las estadísticas se muestran en UpdateDisplay()
+        case 2:  // Statistics mode
+          // Statistics are displayed in UpdateDisplay()
           break;
-        case 3:  // Modo diagnóstico específico
+        case 3:  // Specific diagnostic mode
           ProcessDiagnosticRequest(canId, len, buf);
           break;
       }
       
-      // Apagar LED después de un breve período
+      // Turn off LED after a short period
       delay(5);
       digitalWrite(PIN_LED_RX, LOW);
     }
@@ -210,7 +209,7 @@ void ProcessCANMessages() {
 }
 
 void PrintBasicInfo(unsigned long canId, byte len, byte *buf) {
-  // Formato básico: ID - [Datos en hex]
+  // Basic format: ID - [Data in hex]
   Serial.print(F("ID: 0x"));
   Serial.print(canId, HEX);
   
@@ -225,20 +224,20 @@ void PrintBasicInfo(unsigned long canId, byte len, byte *buf) {
 }
 
 void PrintDetailedInfo(unsigned long canId, byte len, byte *buf) {
-  // Formato detallado con tipo de mensaje e interpretación
+  // Detailed format with message type and interpretation
   Serial.print(F("ID: 0x"));
   Serial.print(canId, HEX);
   Serial.print(F(" Len:"));
   Serial.print(len);
   
-  // Interpretar tipo de mensaje basado en ID
-  Serial.print(F(" Tipo:"));
+  // Interpret message type based on ID
+  Serial.print(F(" Type:"));
   if (canId < 0x100) {
-    Serial.print(F("Motor"));
+    Serial.print(F("Engine"));
   } else if (canId < 0x200) {
     Serial.print(F("Trans"));
   } else if (canId < 0x400) {
-    Serial.print(F("Chasis"));
+    Serial.print(F("Chassis"));
   } else if (canId < 0x600) {
     Serial.print(F("Body"));
   } else if (canId < 0x7E0) {
@@ -246,10 +245,10 @@ void PrintDetailedInfo(unsigned long canId, byte len, byte *buf) {
   } else if (canId >= 0x7E0 && canId <= 0x7EF) {
     Serial.print(F("DIAG"));
   } else {
-    Serial.print(F("Otro"));
+    Serial.print(F("Other"));
   }
   
-  // Mostrar datos
+  // Display data
   Serial.print(F(" ["));
   for (int i = 0; i < len; i++) {
     if (buf[i] < 0x10) Serial.print(F("0"));
@@ -258,7 +257,7 @@ void PrintDetailedInfo(unsigned long canId, byte len, byte *buf) {
   }
   Serial.print(F("] ASCII:"));
   
-  // Mostrar como ASCII si es posible
+  // Display as ASCII if possible
   for (int i = 0; i < len; i++) {
     if (buf[i] >= 32 && buf[i] <= 126) {
       Serial.write(buf[i]);
@@ -270,24 +269,24 @@ void PrintDetailedInfo(unsigned long canId, byte len, byte *buf) {
 }
 
 void ProcessDiagnosticRequest(unsigned long canId, byte len, byte *buf) {
-  // Procesar respuestas a solicitudes de diagnóstico
-  if (canId >= 0x7E8 && canId <= 0x7EF) {  // Respuestas diagnósticas
-    Serial.print(F("RESP DIAG ["));
+  // Process responses to diagnostic requests
+  if (canId >= 0x7E8 && canId <= 0x7EF) {  // Diagnostic responses
+    Serial.print(F("DIAG RESP ["));
     Serial.print(canId - 0x7E0, HEX);
     Serial.print(F("]: "));
     
     if (len > 2 && buf[0] > 0) {
       byte serviceId = buf[1];
-      if (serviceId == 0x41) {  // Respuesta a modo 01 (datos actuales)
-        Serial.print(F("Modo 01 PID "));
+      if (serviceId == 0x41) {  // Response to mode 01 (current data)
+        Serial.print(F("Mode 01 PID "));
         Serial.print(buf[2], HEX);
         
-        // Interpretar algunos PIDs comunes
+        // Interpret some common PIDs
         InterpretCommonPIDs(buf[2], &buf[3], len-3);
-      } else if (serviceId == 0x42) {  // Respuesta a modo 02 (datos congelados)
-        Serial.println(F("Datos congelados"));
+      } else if (serviceId == 0x42) {  // Response to mode 02 (frozen data)
+        Serial.println(F("Frozen data"));
       } else {
-        Serial.print(F("Modo "));
+        Serial.print(F("Mode "));
         Serial.print(serviceId - 0x40, HEX);
       }
     }
@@ -296,7 +295,7 @@ void ProcessDiagnosticRequest(unsigned long canId, byte len, byte *buf) {
 }
 
 void InterpretCommonPIDs(byte pid, byte *data, byte len) {
-  // Interpretación simplificada de algunos PIDs comunes
+  // Simplified interpretation of some common PIDs
   switch (pid) {
     case 0x0C:  // RPM
       if (len >= 2) {
@@ -305,14 +304,14 @@ void InterpretCommonPIDs(byte pid, byte *data, byte len) {
         Serial.print(rpm);
       }
       break;
-    case 0x0D:  // Velocidad
+    case 0x0D:  // Speed
       if (len >= 1) {
-        Serial.print(F(" = Velocidad: "));
+        Serial.print(F(" = Speed: "));
         Serial.print(data[0]);
         Serial.print(F(" km/h"));
       }
       break;
-    case 0x05:  // Temp. refrigerante
+    case 0x05:  // Coolant temperature
       if (len >= 1) {
         Serial.print(F(" = Temp: "));
         Serial.print(data[0] - 40);
@@ -320,7 +319,7 @@ void InterpretCommonPIDs(byte pid, byte *data, byte len) {
       }
       break;
     default:
-      // Para otros PIDs solo mostrar los datos en hex
+      // For other PIDs just display the data in hex
       Serial.print(F(" = "));
       for (int i = 0; i < len; i++) {
         if (data[i] < 0x10) Serial.print(F("0"));
@@ -335,29 +334,29 @@ void UpdateDisplay() {
   
   lcd.clear();
   
-  // Primera línea según modo
+  // First line based on mode
   lcd.setCursor(0, 0);
   switch (operationMode) {
     case 0:
-      lcd.print("Monitor basico");
+      lcd.print("Basic monitor");
       break;
     case 1:
-      lcd.print("Monitor detalle");
+      lcd.print("Detailed monitor");
       break;
     case 2:
-      lcd.print("Estadisticas");
+      lcd.print("Statistics");
       break;
     case 3:
-      lcd.print("Diagnostico");
+      lcd.print("Diagnostic");
       break;
   }
   
-  // Segunda línea: información relevante según el modo
+  // Second line: relevant information based on mode
   lcd.setCursor(0, 1);
   switch (operationMode) {
     case 0:
     case 1:
-      // Mostrar mensajes por segundo
+      // Display messages per second
       unsigned long currentTime = millis();
       static unsigned int lastCount = 0;
       static unsigned long lastCalcTime = 0;
@@ -373,17 +372,17 @@ void UpdateDisplay() {
       lcd.print(msgsPerSecond);
       lcd.print("/s");
       
-      // Mostrar si la resistencia terminadora está activa
+      // Display if termination resistor is active
       lcd.setCursor(13, 1);
       lcd.print(termResistorEnabled ? "TRM" : "   ");
       break;
     
     case 2:
-      // En modo estadísticas mostrar distribución por tipo
+      // In statistics mode display distribution by type
       unsigned long total = 0;
       byte maxIndex = 0;
       
-      // Encontrar el tipo de mensaje más frecuente
+      // Find the most frequent message type
       for (int i = 0; i < 8; i++) {
         total += msgStats[i];
         if (msgStats[i] > msgStats[maxIndex]) {
@@ -399,34 +398,34 @@ void UpdateDisplay() {
         lcd.print("% ");
         lcd.print(total);
       } else {
-        lcd.print("Sin mensajes");
+        lcd.print("No messages");
       }
       break;
       
     case 3:
-      // En modo diagnóstico enviar periódicamente solicitudes
+      // In diagnostic mode send periodic requests
       static byte currentPID = 0;
       
-      // Mostrar PID actual
+      // Display current PID
       lcd.print("PID:");
       if (currentPID < 0x10) lcd.print("0");
       lcd.print(currentPID, HEX);
       
-      // Enviar solicitud de diagnóstico para este PID
-      SendDiagnosticRequest(0x01, currentPID);  // Modo 01, PID actual
+      // Send diagnostic request for this PID
+      SendDiagnosticRequest(0x01, currentPID);  // Mode 01, current PID
       
-      // Rotar al siguiente PID cada cierto tiempo
-      currentPID = (currentPID + 1) % 32;  // Limitar a primeros 32 PIDs
+      // Rotate to next PID every certain time
+      currentPID = (currentPID + 1) % 32;  // Limit to first 32 PIDs
       break;
   }
 }
 
 void SendDiagnosticRequest(byte mode, byte pid) {
   byte data[8] = {0x02, mode, pid, 0, 0, 0, 0, 0};
-  byte result = CAN.sendMsgBuf(0x7DF, 0, 8, data);  // ID estándar de diagnóstico
+  byte result = CAN.sendMsgBuf(0x7DF, 0, 8, data);  // Standard diagnostic ID
   
   if (result != CAN_OK) {
-    Serial.println(F("Error enviando solicitud diagnóstico"));
+    Serial.println(F("Error sending diagnostic request"));
   }
 }
 
@@ -443,32 +442,32 @@ void CheckModeButton() {
   
   if ((millis() - lastDebounceTime) > debounceDelay) {
     if (buttonState == LOW && lastButtonState == HIGH) {
-      // Cambiar al siguiente modo
+      // Switch to next mode
       operationMode = (operationMode + 1) % 4;
       
-      // Actualizar pantalla inmediatamente
+      // Update display immediately
       UpdateDisplay();
       
-      // Indicación visual
+      // Visual indication
       digitalWrite(PIN_LED_RX, HIGH);
       delay(100);
       digitalWrite(PIN_LED_RX, LOW);
       
-      // Mostrar el nuevo modo en serial
-      Serial.print(F("Modo cambiado a: "));
+      // Display new mode on serial
+      Serial.print(F("Mode changed to: "));
       
       switch (operationMode) {
         case 0:
-          Serial.println(F("Monitor Básico"));
+          Serial.println(F("Basic Monitor"));
           break;
         case 1:
-          Serial.println(F("Monitor Detallado"));
+          Serial.println(F("Detailed Monitor"));
           break;
         case 2:
-          Serial.println(F("Estadísticas"));
+          Serial.println(F("Statistics"));
           break;
         case 3:
-          Serial.println(F("Diagnóstico"));
+          Serial.println(F("Diagnostic"));
           break;
       }
     }
@@ -478,10 +477,10 @@ void CheckModeButton() {
 }
 
 void CheckTerminationSwitch() {
-  // Leer el estado del switch de resistencia terminadora
+  // Read termination resistor switch state
   bool currentState = (digitalRead(PIN_SWITCH_TERM) == LOW);
   
-  // Si cambió, actualizar
+  // If changed, update
   if (currentState != termResistorEnabled) {
     termResistorEnabled = currentState;
     UpdateTerminationResistor();
@@ -489,11 +488,11 @@ void CheckTerminationSwitch() {
 }
 
 void UpdateTerminationResistor() {
-  // Aquí se activaría/desactivaría una resistencia terminadora física 
-  // mediante un relay o transistor si el hardware lo soporta
+  // Here a physical termination resistor would be enabled/disabled 
+  // via a relay or transistor if the hardware supports it
   
-  Serial.print(F("Resistencia terminadora: "));
-  Serial.println(termResistorEnabled ? F("ACTIVADA") : F("DESACTIVADA"));
+  Serial.print(F("Termination resistor: "));
+  Serial.println(termResistorEnabled ? F("ENABLED") : F("DISABLED"));
 }
 
 void SignalError() {
@@ -504,17 +503,17 @@ void SignalError() {
 
 void PrintInstructions() {
   Serial.println();
-  Serial.println(F("=== LECTOR CAN BUS - INSTRUCCIONES ==="));
-  Serial.println(F("Botón 1: Cambiar modo (Monitor/Estadísticas/Diagnóstico)"));
-  Serial.println(F("Switch 1: Activar/desactivar resistencia terminadora"));
+  Serial.println(F("=== CAN BUS READER - INSTRUCTIONS ==="));
+  Serial.println(F("Button 1: Change mode (Monitor/Statistics/Diagnostic)"));
+  Serial.println(F("Switch 1: Enable/disable termination resistor"));
   Serial.println();
-  Serial.println(F("Modos disponibles:"));
-  Serial.println(F("0 - Monitor Básico: Muestra ID y datos en formato simple"));
-  Serial.println(F("1 - Monitor Detallado: Muestra información completa de mensajes"));
-  Serial.println(F("2 - Estadísticas: Muestra distribución de tipos de mensajes"));
-  Serial.println(F("3 - Diagnóstico: Intenta comunicarse con módulos usando protocolo OBD2"));
+  Serial.println(F("Available modes:"));
+  Serial.println(F("0 - Basic Monitor: Displays ID and data in simple format"));
+  Serial.println(F("1 - Detailed Monitor: Displays complete message information"));
+  Serial.println(F("2 - Statistics: Displays message type distribution"));
+  Serial.println(F("3 - Diagnostic: Attempts to communicate with modules using OBD2 protocol"));
   Serial.println();
-  Serial.println(F("LED RX: Parpadea al recibir mensajes"));
-  Serial.println(F("LED ERROR: Indica problemas en la inicialización o comunicación"));
+  Serial.println(F("RX LED: Blinks when receiving messages"));
+  Serial.println(F("ERROR LED: Indicates initialization or communication issues"));
   Serial.println(F("======================================"));
 }

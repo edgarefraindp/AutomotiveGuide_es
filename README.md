@@ -15,11 +15,11 @@ This repository contains automotive documentation and utilities focused on moder
 
 - [Introducción / Introduction](#introducción--introduction)
 - [Documentación / Documentation](#documentación--documentation)
-  - [Sensores y Actuadores / Sensors and Actuators](docs/sensores-y-actuadores.md)
+  - [Sensores y Actuadores / Sensors and Actuators](docs/sensores-y-actuadores/README.md)
   - [Diagnóstico / Diagnostics](docs/diagnostico/README.md)
 - [Utilidades / Utilities](#utilidades--utilities)
-  - [Arduino](utilities/arduino/arduino.md)
-  - [ESP32](utilities/esp32/esp32.md)
+  - [Arduino](utilities/arduino/README.md)
+  - [ESP32](utilities/esp32/README.md)
 - [Público Objetivo / Target Audience](#público-objetivo--target-audience)
 - [Apoya el Proyecto / Support the Project](#apoya-el-proyecto--support-the-project)
 - [Licencia / License](#licencia--license)
@@ -137,12 +137,12 @@ The repository includes tools and resources for automotive technicians working w
 
 ### Arduino
 
-- [Documentación de Arduino](utilities/arduino/arduino.md) / [Arduino Documentation](utilities/arduino/arduino.md)
+- [Documentación de Arduino](utilities/arduino/README.md) / [Arduino Documentation](utilities/arduino/README.md)
 - [Pulsador de Inyectores](utilities/arduino/pulsadorInyectores/manual_es.md): Herramienta para probar inyectores de combustible. / [Injector Pulser](utilities/arduino/pulsadorInyectores/manual_es.md): Tool for testing fuel injectors.
 
 ### ESP32
 
-- [Documentación de ESP32](utilities/esp32/esp32.md): Proyectos basados en microcontroladores ESP32 para diagnóstico automotriz. / [ESP32 Documentation](utilities/esp32/esp32.md): ESP32 microcontroller-based projects for automotive diagnostics.
+- [Documentación de ESP32](utilities/esp32/README.md): Proyectos basados en microcontroladores ESP32 para diagnóstico automotriz. / [ESP32 Documentation](utilities/esp32/README.md): ESP32 microcontroller-based projects for automotive diagnostics.
 - [Pulsador de Inyectores ESP32](utilities/esp32/pulsadorInyectores_ESP32/manual_es.md): Versión mejorada del pulsador de inyectores basada en ESP32. / [ESP32 Injector Pulser](utilities/esp32/pulsadorInyectores_ESP32/manual_es.md): Enhanced version of the injector pulser based on ESP32.
 - [Control de Marcha con Sensor MAP](utilities/esp32/encendidoElectronico1/manual_es.md): Sistema de control de marcha basado en sensor de presión del múltiple de admisión. / [MAP Sensor-Based Idle Control](utilities/esp32/encendidoElectronico1/manual_es.md): Idle control system based on intake manifold pressure sensor.
 - [Banqueo ECU](utilities/esp32/banqueoEcu1/manual_es.md): Sistema para prueba y diagnóstico de ECUs fuera del vehículo. / [ECU Test Bench](utilities/esp32/banqueoEcu1/manual_es.md): System for testing and diagnosing ECUs outside the vehicle.
